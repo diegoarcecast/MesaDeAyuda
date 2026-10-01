@@ -1,0 +1,433 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+@{
+    ViewBag.Title = "Ingreso";
+}
+<script type="text/javascript">
+    function mostrarDialogoRegistro() {
+        $("#contenedorControles").hide();
+        $("#contenedorLogo").hide();
+        $("#contenedorNuevoUsuario").fadeIn();
+
+    }
+
+    function CerrarFormularioRegistro() {
+        $("#contenedorNuevoUsuario").hide();
+        $("#contenedorLogo").fadeIn();
+        $("#contenedorControles").fadeIn();
+    }
+
+    $(document).ready(function () {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ListarUnidades","Catalogos")',
+            dataType: "json",
+            contentType: "application/json",
+            processData: true,
+            success: function (resultado) {
+                debugger;
+
+                $.each(resultado, function (key, value) {
+                    $('#cmbUnidad').append($("<option/>", {
+                        value: value.PKUNIDAD,
+                        text: value.CODIGO + ' ' + value.DESCRIPCION
+                    }));
+                });
+            },
+            error: function (xhr, ajaxOptions, error) {
+                $("#contenedorBotones").show();
+                $("#contenedorEspera").hide();
+                $("#txtModalTitulo").css("color", "red");
+                $("#txtModalTitulo").text("Error al registrar");
+                $("#txtModalContenido").text("Fallo al comunicarse con el servidor");
+                instMensajes.open();
+
+            }
+        });
+        $('[data-toggle="tooltip"]').tooltip();
+        document.title = "Soporte INAMU";
+        var instMensajes = $('[data-remodal-id=modalDialogo]').remodal();
+        $("#contenedorNuevoUsuario").hide();
+        $("#contenedorEspera").hide();
+        $("#txtCorreo").focusout(function () {
+            $.notify("Buscando persona en el directorio", "info");
+            if ($("#txtCorreo").val() !== null && $("#txtCorreo").val() !== '') {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ComprobarUsuarioAd","Seguridad")',
+                    data: {
+                        usuarioAd: $('#txtCorreo').val()
+                    },
+                    processData: true,
+                    success: function (data) {
+                        $.notify("Búsqueda en el directorio terminada", "success");
+                        if (data !== null && data !== '') {
+                            var objUsuario = JSON.parse(data);
+                            var nombrePersona = objUsuario.displayName.split(' ');
+
+                            if (typeof nombrePersona[0] === 'undefined') {
+                                $("#txtNombre").val("");
+                            } else {
+                                $("#txtNombre").val(nombrePersona[0]);
+                            }
+                            if (typeof nombrePersona[1] === 'undefined') {
+                                $("#txtApellido1").val("");
+                            } else {
+                                $("#txtApellido1").val(nombrePersona[1]);
+                            }
+                            if (typeof nombrePersona[2] === 'undefined') {
+                                $("#txtApellido2").val("");
+                            } else {
+                                $("#txtApellido2").val(nombrePersona[2]);
+
+                            }
+
+                            $('#cmbUnidad').prop('title', "Sugerida deacuerdo al directorio: " + objUsuario.physicalDeliveryOfficeName).tooltip('fixTitle').tooltip('show');
+                        }
+
+                        //$('#contenedorControles').show();
+                        //$('#contenedorEspera').hide();
+
+                    },
+                    error: function (xhr, ajaxOptions, error) {
+                        $.notify("Error al buscar en el directorio", "danger");
+
+                    }
+                });
+            }
+        });
+        $("#btn-Registro").click(function () {
+            $.LoadingOverlay("show");
+            var resultadoValidacion = $('#registroForm').parsley().validate();
+            if (resultadoValidacion === true) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("RegistrarUsuario", "Seguridad")',
+                    data: {
+                        NombreUsuario: $("#txtCorreo").val(),
+                        FkUnidad: $("#cmbUnidad").val(),
+                        Nombre: $("#txtNombre").val(),
+                        PrimerApellido: $("#txtApellido1").val(),
+                        SegundoApellido: $("#txtApellido2").val(),
+                        MiClave: $("#txtClaveNuevo").val()
+                    },
+                    processData: true,
+                    success: function (data) {
+
+
+                        if (data.TipoMensaje == 2) {
+                            debugger;
+                            $("#txtModalTitulo").css("color", "red");
+                            $("#txtModalTitulo").text("Error");
+                            $("#txtModalContenido").text(data.ContenidoMensaje);
+                            instMensajes.open();
+                            $.LoadingOverlay("hide");
+                        } else if (data.TipoMensaje == 1) {
+                            try {
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: '@Url.Action("RegistrarEventoBitacora", "Seguridad")',
+                                    data: {
+                                        idTipoEvento: 1,
+                                        fkUsuario: 0,
+                                        contenido: data.ContenidoMensaje
+                                    },
+                                    success: function (data) {
+                                        $("#txtModalTitulo").css("color", "green");
+                                        $("#txtModalTitulo").text("Registro Exitoso");
+                                        $("#txtModalContenido").text("Puede ingresar al sistema con su usuario y contraseña de red");
+                                        instMensajes.open();
+                                        CerrarFormularioRegistro();
+                                        $.LoadingOverlay("hide");
+
+                                    },
+                                    error: function (xhr, ajaxOptions, error) {
+                                        $("#txtModalTitulo").css("color", "green");
+                                        $("#txtModalTitulo").text("Registro Exitoso");
+                                        $("#txtModalContenido").text("Puede ingresar al sistema con su usuario y contraseña de red");
+                                        instMensajes.open();
+                                        CerrarFormularioRegistro();
+                                        $.LoadingOverlay("hide");
+
+
+                                    }
+                                });
+
+
+                            } catch (err) {
+                                $("#txtModalTitulo").css("color", "green");
+                                $("#txtModalTitulo").text("Registro Exitoso");
+                                $("#txtModalContenido").text("Puede ingresar al sistema con su usuario y contraseña de red");
+                                instMensajes.open();
+                                CerrarFormularioRegistro();
+                                $.LoadingOverlay("hide");
+                            }
+
+
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, error) {
+                        $("#txtModalTitulo").css("color", "red");
+                        $("#txtModalTitulo").text("Conexión Fallida");
+                        $("#txtModalContenido").text("Error al contactar al servidor, intente de nuevo");
+                        instMensajes.open();
+                        $.LoadingOverlay("hide");
+
+
+                    }
+                });
+            }
+            else {
+                $.LoadingOverlay("hide");
+            }
+        });
+        $("#btn-login")
+            .click(function () {
+                $.LoadingOverlay("show");
+                var resultadoValidacion = $('#loginform').parsley().validate();
+                if (resultadoValidacion == true) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("AutenticarUsuario","Seguridad")',
+                        data: {
+                            usuario: $('#txtLogin').val(),
+                            clave: $('#txtClave').val()
+                        },
+                        processData: true,
+                        success: function (data) {
+
+
+                            if (data.TipoMensaje == 2) {
+
+                                $("#txtModalTitulo").css("color", "red");
+                                $("#txtModalTitulo").text("Conexión Fallida");
+                                $("#txtModalContenido").text(data.ContenidoMensaje);
+                                instMensajes.open();
+                                $.LoadingOverlay("hide");
+                            } else if (data.TipoMensaje == 1) {
+                                window.location.href = '@Url.Action("Index", "Home")';
+                            }
+                        },
+                        error: function (xhr, ajaxOptions, error) {
+                            $("#txtModalTitulo").css("color", "red");
+                            $("#txtModalTitulo").text("Conexión Fallida");
+                            $("#txtModalContenido").text("Error al contactar al servidor, intente de nuevo");
+                            instMensajes.open();
+                            $.LoadingOverlay("hide");
+
+                        }
+                    });
+
+                } else {
+                    $("#txtModalTitulo").css("color", "red");
+                    $("#txtModalTitulo").text("Formulario Incompleto");
+                    $("#txtModalContenido").text("Error, debe suministrar su usuario de red además de su contraseña.");
+                    instMensajes.open();
+                    $.LoadingOverlay("hide");
+                }
+
+            });
+
+    });
+</script>
+<div class="remodal" style="background-color: white;" data-remodal-id="modalDialogo"
+     data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <h3 id="txtModalTitulo">INAMU Mesa de Ayuda</h3>
+    <p>
+        <span id="txtModalContenido"></span>
+    </p>
+</div>
+<div class="center-block" id="contenedorLogo" style="text-align:center;">
+    <img class="imagenAlinearCentro" src="~/Content/Imagenes/Team-01.png" />
+
+</div>
+<div class="row" id="contenedorControles">
+    <div class="container">
+        <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div class="panel panel-info">
+                <div class="panel-heading" style="background-color: #0099ba">
+                    <div class="panel-title" style="text-align: center">Mesa de Ayuda</div>
+                    <div style="float: right; font-size: 80%; position: relative; top: -10px">@*<a href="#">Forgot password?</a>*@</div>
+                </div>
+
+                <div style="padding-top: 30px" class="panel-body">
+
+                    <div style="display: none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+
+                    <form id="loginform" class="form-horizontal" role="form" method="POST">
+
+                        <div class="row" style="padding-bottom: 5px">
+                            <div class="col-xs-1"><span class="input-group-addon" style="border: none;"><i class="glyphicon glyphicon-user" style="padding-top: 3.5px"></i></span></div>
+                            <div class="col-xs-11">
+                                <input id="txtLogin" type="text" class="form-control" name="username" value="" placeholder="usuario@inamu.go.cr" style="max-width: 100%" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-1"><span class="input-group-addon" style="border: none;"><i class="glyphicon glyphicon-log-in" style="padding-top: 3.5px"></i></span></div>
+                            <div class="col-xs-11">
+                                <input id="txtClave" type="password" class="form-control" name="password" placeholder="Contraseña" style="max-width: 100%" required>
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px;margin-bottom: 10px !important" class="form-group">
+                            <!-- Button -->
+
+                            <div class="col-sm-12 controls" style="text-align: center">
+                                <a id="btn-login" class="flat-btn flat-btn-success" style="background-color: #ff471a">Ingresar</a>
+                                @*<a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>*@
+
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 3px">
+                            <div class="col-md-12 control">
+                                <div style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%; ">
+                                    Primera vez en el sistema?
+                                    <a href="#" onclick="mostrarDialogoRegistro()">
+                                        Registrarse AQUI
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 control">
+                                <div style="padding-top: 1px; font-size: 85%">
+                                    Colaboradora Externa?
+                                    <a href="mailto:soporte@inamu.go.cr?Subject=Solicitud%20de%20Acceso%20">
+                                        Solicite acceso AQUI
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        @*<div class="form-group">
+                                <div class="col-md-12 control">
+                                    <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
+                                        Don't have an account!
+                                        <a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">
+                                            Sign Up Here
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>*@
+                    </form>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row" id="contenedorNuevoUsuario" style="padding-top: 50px">
+    <div class="container">
+        <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div class="panel panel-info">
+                <div class="panel-heading" style="background-color: #0099ba">
+                    <div class="panel-title" style="text-align: center">Solicitud de Registro</div>
+                    <div style="float: right; font-size: 80%; position: relative; top: -10px">@*<a href="#">Forgot password?</a>*@</div>
+                </div>
+                <form id="registroForm" method="POST" onsubmit="return false">
+                    <div style="padding-top: 10px" class="panel-body">
+
+                        <div class="row" style="padding-bottom: 3px">
+                            <div class="col-xs-10"></div>
+                            <div class="col-xs-2">
+                                <button class="botonCerrar danger" onclick="CerrarFormularioRegistro()">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-bottom: 5px">
+                            <div class="col-xs-12 form-group">
+                                <label>Correo</label>
+
+                                <input class="form-control totalAncho" placeholder="persona@inamu.go.cr" id="txtCorreo" type="email" required />
+                            </div>
+                        </div>
+                        <div class="row" style="padding-bottom: 5px">
+                            <div class="col-xs-12 form-group">
+                                <label>Nombre</label>
+
+                                <input class="form-control totalAncho" placeholder="Ana" id="txtNombre" type="text" required />
+                            </div>
+                        </div>
+                        <div class="row" style="padding-bottom: 5px">
+                            <div class="col-xs-12 form-group">
+                                <label>Apellido1</label>
+
+                                <input class="form-control totalAncho" placeholder="Solano" id="txtApellido1" type="text" required />
+                            </div>
+                        </div>
+                        <div class="row" style="padding-bottom: 5px">
+                            <div class="col-xs-12 form-group">
+                                <label>Apellido2</label>
+
+                                <input class="form-control totalAncho" placeholder="Pérez" id="txtApellido2" type="text" required />
+                            </div>
+                        </div>
+                        <div class="row" style="padding-bottom: 5px">
+                            <div class="col-xs-12 form-group">
+                                <label>Unidad</label>
+                                <select class="form-control totalAncho" required data-toggle="tooltip" id="cmbUnidad" title="Sugerida deacuerdo al directorio: Ninguna"></select>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-bottom: 5px">
+                            <div class="col-xs-12 form-group">
+                                <label>Clave</label>
+                                <input class="form-control totalAncho" placeholder="Contraseña del correo institucional" required type="password" id="txtClaveNuevo" />
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 5px" class="form-group">
+                            <!-- Button -->
+
+                            <div class="col-sm-12 controls" style="text-align: center">
+                                <a id="btn-Registro" class="flat-btn flat-btn-success" style="background-color: #ff471a">Registrarse</a>
+                                @*<a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>*@
+
+                            </div>
+                        </div>
+
+
+                        @*<div class="form-group">
+                                <div class="col-md-12 control">
+                                    <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
+                                        Don't have an account!
+                                        <a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">
+                                            Sign Up Here
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>*@
+
+
+
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="container" id="contenedorEspera">
+    <div class="row" style="margin-top: 50px">
+        <div style="padding-top: 30px; text-align: center;border:none" class="panel-body">
+            <div class="col-xs-12 center" style="text-align: center; height: 15% !important">
+                @*<img src="~/Content/Imagenes/loadingGif.gif" style="max-height: 15%; max-width: 15%"/>*@
+                <img src="~/Content/Imagenes/load.gif" />
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

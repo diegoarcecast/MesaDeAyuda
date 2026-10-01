@@ -1,0 +1,403 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="INAMU_COMUNModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CAT_CANTON">
+          <Key>
+            <PropertyRef Name="I_IDCANTON" />
+            <PropertyRef Name="I_IDPROVINCIA" />
+          </Key>
+          <Property Name="I_IDCANTON" Type="int" Nullable="false" />
+          <Property Name="I_IDPROVINCIA" Type="int" Nullable="false" />
+          <Property Name="VC_DESCRIPCION" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CAT_COMUNIDAD">
+          <Key>
+            <PropertyRef Name="I_IDCOMUNIDAD" />
+            <PropertyRef Name="I_IDDISTRITO" />
+            <PropertyRef Name="I_IDCANTON" />
+            <PropertyRef Name="I_IDPROVINCIA" />
+          </Key>
+          <Property Name="I_IDCOMUNIDAD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="I_IDDISTRITO" Type="int" Nullable="false" />
+          <Property Name="I_IDCANTON" Type="int" Nullable="false" />
+          <Property Name="I_IDPROVINCIA" Type="int" Nullable="false" />
+          <Property Name="VC_DESCRIPCION" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CAT_DISTRITO">
+          <Key>
+            <PropertyRef Name="I_IDDISTRITO" />
+            <PropertyRef Name="I_IDCANTON" />
+            <PropertyRef Name="I_IDPROVINCIA" />
+          </Key>
+          <Property Name="I_IDDISTRITO" Type="int" Nullable="false" />
+          <Property Name="I_IDCANTON" Type="int" Nullable="false" />
+          <Property Name="I_IDPROVINCIA" Type="int" Nullable="false" />
+          <Property Name="I_IDREGION" Type="int" />
+          <Property Name="VC_DESCRIPCION" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'INAMU_COMUN.dbo.CAT_PAIS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CAT_PAIS">
+          <Key>
+            <PropertyRef Name="I_IDPAIS" />
+            <PropertyRef Name="VC_DESCRIPCION" />
+          </Key>
+          <Property Name="I_IDPAIS" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VC_DESCRIPCION" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CAT_PROVINCIA">
+          <Key>
+            <PropertyRef Name="I_IDPROVINCIA" />
+          </Key>
+          <Property Name="I_IDPROVINCIA" Type="int" Nullable="false" />
+          <Property Name="VC_DESCRIPCION" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CAT_REGION">
+          <Key>
+            <PropertyRef Name="I_IDREGION" />
+          </Key>
+          <Property Name="I_IDREGION" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VC_DESCRIPCION" Type="varchar(max)" />
+        </EntityType>
+        <Association Name="FK_CAT_CANT_REFERENCE_CAT_PROV">
+          <End Role="CAT_PROVINCIA" Type="Self.CAT_PROVINCIA" Multiplicity="1" />
+          <End Role="CAT_CANTON" Type="Self.CAT_CANTON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_PROVINCIA">
+              <PropertyRef Name="I_IDPROVINCIA" />
+            </Principal>
+            <Dependent Role="CAT_CANTON">
+              <PropertyRef Name="I_IDPROVINCIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CAT_COMU_REFERENCE_CAT_DIST">
+          <End Role="CAT_DISTRITO" Type="Self.CAT_DISTRITO" Multiplicity="1" />
+          <End Role="CAT_COMUNIDAD" Type="Self.CAT_COMUNIDAD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_DISTRITO">
+              <PropertyRef Name="I_IDDISTRITO" />
+              <PropertyRef Name="I_IDCANTON" />
+              <PropertyRef Name="I_IDPROVINCIA" />
+            </Principal>
+            <Dependent Role="CAT_COMUNIDAD">
+              <PropertyRef Name="I_IDDISTRITO" />
+              <PropertyRef Name="I_IDCANTON" />
+              <PropertyRef Name="I_IDPROVINCIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CAT_COMU_REFERENCE_CAT_REGI">
+          <End Role="CAT_REGION" Type="Self.CAT_REGION" Multiplicity="0..1" />
+          <End Role="CAT_DISTRITO" Type="Self.CAT_DISTRITO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_REGION">
+              <PropertyRef Name="I_IDREGION" />
+            </Principal>
+            <Dependent Role="CAT_DISTRITO">
+              <PropertyRef Name="I_IDREGION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CAT_DIST_REFERENCE_CAT_CANT">
+          <End Role="CAT_CANTON" Type="Self.CAT_CANTON" Multiplicity="1" />
+          <End Role="CAT_DISTRITO" Type="Self.CAT_DISTRITO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_CANTON">
+              <PropertyRef Name="I_IDCANTON" />
+              <PropertyRef Name="I_IDPROVINCIA" />
+            </Principal>
+            <Dependent Role="CAT_DISTRITO">
+              <PropertyRef Name="I_IDCANTON" />
+              <PropertyRef Name="I_IDPROVINCIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="spConsultarPadron" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Cedula" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="INAMU_COMUNModelStoreContainer">
+          <EntitySet Name="CAT_CANTON" EntityType="Self.CAT_CANTON" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAT_COMUNIDAD" EntityType="Self.CAT_COMUNIDAD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAT_DISTRITO" EntityType="Self.CAT_DISTRITO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAT_PROVINCIA" EntityType="Self.CAT_PROVINCIA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAT_REGION" EntityType="Self.CAT_REGION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAT_PAIS" EntityType="Self.CAT_PAIS" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[CAT_PAIS].[I_IDPAIS] AS [I_IDPAIS], 
+[CAT_PAIS].[VC_DESCRIPCION] AS [VC_DESCRIPCION]
+FROM [dbo].[CAT_PAIS] AS [CAT_PAIS]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_CAT_CANT_REFERENCE_CAT_PROV" Association="Self.FK_CAT_CANT_REFERENCE_CAT_PROV">
+            <End Role="CAT_PROVINCIA" EntitySet="CAT_PROVINCIA" />
+            <End Role="CAT_CANTON" EntitySet="CAT_CANTON" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CAT_COMU_REFERENCE_CAT_DIST" Association="Self.FK_CAT_COMU_REFERENCE_CAT_DIST">
+            <End Role="CAT_DISTRITO" EntitySet="CAT_DISTRITO" />
+            <End Role="CAT_COMUNIDAD" EntitySet="CAT_COMUNIDAD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CAT_COMU_REFERENCE_CAT_REGI" Association="Self.FK_CAT_COMU_REFERENCE_CAT_REGI">
+            <End Role="CAT_REGION" EntitySet="CAT_REGION" />
+            <End Role="CAT_DISTRITO" EntitySet="CAT_DISTRITO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CAT_DIST_REFERENCE_CAT_CANT" Association="Self.FK_CAT_DIST_REFERENCE_CAT_CANT">
+            <End Role="CAT_CANTON" EntitySet="CAT_CANTON" />
+            <End Role="CAT_DISTRITO" EntitySet="CAT_DISTRITO" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="INAMU_COMUNModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="INAMU_COMUNEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="CAT_CANTON" EntityType="INAMU_COMUNModel.CAT_CANTON" />
+          <EntitySet Name="CAT_COMUNIDAD" EntityType="INAMU_COMUNModel.CAT_COMUNIDAD" />
+          <EntitySet Name="CAT_DISTRITO" EntityType="INAMU_COMUNModel.CAT_DISTRITO" />
+          <EntitySet Name="CAT_PAIS" EntityType="INAMU_COMUNModel.CAT_PAIS" />
+          <EntitySet Name="CAT_PROVINCIA" EntityType="INAMU_COMUNModel.CAT_PROVINCIA" />
+          <EntitySet Name="CAT_REGION" EntityType="INAMU_COMUNModel.CAT_REGION" />
+          <AssociationSet Name="FK_CAT_CANT_REFERENCE_CAT_PROV" Association="INAMU_COMUNModel.FK_CAT_CANT_REFERENCE_CAT_PROV">
+            <End Role="CAT_PROVINCIA" EntitySet="CAT_PROVINCIA" />
+            <End Role="CAT_CANTON" EntitySet="CAT_CANTON" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CAT_DIST_REFERENCE_CAT_CANT" Association="INAMU_COMUNModel.FK_CAT_DIST_REFERENCE_CAT_CANT">
+            <End Role="CAT_CANTON" EntitySet="CAT_CANTON" />
+            <End Role="CAT_DISTRITO" EntitySet="CAT_DISTRITO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CAT_COMU_REFERENCE_CAT_DIST" Association="INAMU_COMUNModel.FK_CAT_COMU_REFERENCE_CAT_DIST">
+            <End Role="CAT_DISTRITO" EntitySet="CAT_DISTRITO" />
+            <End Role="CAT_COMUNIDAD" EntitySet="CAT_COMUNIDAD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CAT_COMU_REFERENCE_CAT_REGI" Association="INAMU_COMUNModel.FK_CAT_COMU_REFERENCE_CAT_REGI">
+            <End Role="CAT_REGION" EntitySet="CAT_REGION" />
+            <End Role="CAT_DISTRITO" EntitySet="CAT_DISTRITO" />
+          </AssociationSet>
+          <FunctionImport Name="spConsultarPadron" ReturnType="Collection(INAMU_COMUNModel.spConsultarPadron_Result)">
+            <Parameter Name="Cedula" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="CAT_CANTON">
+          <Key>
+            <PropertyRef Name="I_IDCANTON" />
+            <PropertyRef Name="I_IDPROVINCIA" />
+          </Key>
+          <Property Type="Int32" Name="I_IDCANTON" Nullable="false" />
+          <Property Type="Int32" Name="I_IDPROVINCIA" Nullable="false" />
+          <Property Type="String" Name="VC_DESCRIPCION" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CAT_PROVINCIA" Relationship="INAMU_COMUNModel.FK_CAT_CANT_REFERENCE_CAT_PROV" FromRole="CAT_CANTON" ToRole="CAT_PROVINCIA" />
+          <NavigationProperty Name="CAT_DISTRITO" Relationship="INAMU_COMUNModel.FK_CAT_DIST_REFERENCE_CAT_CANT" FromRole="CAT_CANTON" ToRole="CAT_DISTRITO" />
+        </EntityType>
+        <EntityType Name="CAT_COMUNIDAD">
+          <Key>
+            <PropertyRef Name="I_IDCOMUNIDAD" />
+            <PropertyRef Name="I_IDDISTRITO" />
+            <PropertyRef Name="I_IDCANTON" />
+            <PropertyRef Name="I_IDPROVINCIA" />
+          </Key>
+          <Property Type="Int32" Name="I_IDCOMUNIDAD" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="I_IDDISTRITO" Nullable="false" />
+          <Property Type="Int32" Name="I_IDCANTON" Nullable="false" />
+          <Property Type="Int32" Name="I_IDPROVINCIA" Nullable="false" />
+          <Property Type="String" Name="VC_DESCRIPCION" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CAT_DISTRITO" Relationship="INAMU_COMUNModel.FK_CAT_COMU_REFERENCE_CAT_DIST" FromRole="CAT_COMUNIDAD" ToRole="CAT_DISTRITO" />
+        </EntityType>
+        <EntityType Name="CAT_DISTRITO">
+          <Key>
+            <PropertyRef Name="I_IDDISTRITO" />
+            <PropertyRef Name="I_IDCANTON" />
+            <PropertyRef Name="I_IDPROVINCIA" />
+          </Key>
+          <Property Type="Int32" Name="I_IDDISTRITO" Nullable="false" />
+          <Property Type="Int32" Name="I_IDCANTON" Nullable="false" />
+          <Property Type="Int32" Name="I_IDPROVINCIA" Nullable="false" />
+          <Property Type="Int32" Name="I_IDREGION" />
+          <Property Type="String" Name="VC_DESCRIPCION" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CAT_CANTON" Relationship="INAMU_COMUNModel.FK_CAT_DIST_REFERENCE_CAT_CANT" FromRole="CAT_DISTRITO" ToRole="CAT_CANTON" />
+          <NavigationProperty Name="CAT_COMUNIDAD" Relationship="INAMU_COMUNModel.FK_CAT_COMU_REFERENCE_CAT_DIST" FromRole="CAT_DISTRITO" ToRole="CAT_COMUNIDAD" />
+          <NavigationProperty Name="CAT_REGION" Relationship="INAMU_COMUNModel.FK_CAT_COMU_REFERENCE_CAT_REGI" FromRole="CAT_DISTRITO" ToRole="CAT_REGION" />
+        </EntityType>
+        <EntityType Name="CAT_PAIS">
+          <Key>
+            <PropertyRef Name="I_IDPAIS" />
+            <PropertyRef Name="VC_DESCRIPCION" />
+          </Key>
+          <Property Type="Int32" Name="I_IDPAIS" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="VC_DESCRIPCION" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CAT_PROVINCIA">
+          <Key>
+            <PropertyRef Name="I_IDPROVINCIA" />
+          </Key>
+          <Property Type="Int32" Name="I_IDPROVINCIA" Nullable="false" />
+          <Property Type="String" Name="VC_DESCRIPCION" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CAT_CANTON" Relationship="INAMU_COMUNModel.FK_CAT_CANT_REFERENCE_CAT_PROV" FromRole="CAT_PROVINCIA" ToRole="CAT_CANTON" />
+        </EntityType>
+        <EntityType Name="CAT_REGION">
+          <Key>
+            <PropertyRef Name="I_IDREGION" />
+          </Key>
+          <Property Type="Int32" Name="I_IDREGION" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="VC_DESCRIPCION" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CAT_DISTRITO" Relationship="INAMU_COMUNModel.FK_CAT_COMU_REFERENCE_CAT_REGI" FromRole="CAT_REGION" ToRole="CAT_DISTRITO" />
+        </EntityType>
+        <Association Name="FK_CAT_CANT_REFERENCE_CAT_PROV">
+          <End Type="INAMU_COMUNModel.CAT_PROVINCIA" Role="CAT_PROVINCIA" Multiplicity="1" />
+          <End Type="INAMU_COMUNModel.CAT_CANTON" Role="CAT_CANTON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_PROVINCIA">
+              <PropertyRef Name="I_IDPROVINCIA" />
+            </Principal>
+            <Dependent Role="CAT_CANTON">
+              <PropertyRef Name="I_IDPROVINCIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CAT_DIST_REFERENCE_CAT_CANT">
+          <End Type="INAMU_COMUNModel.CAT_CANTON" Role="CAT_CANTON" Multiplicity="1" />
+          <End Type="INAMU_COMUNModel.CAT_DISTRITO" Role="CAT_DISTRITO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_CANTON">
+              <PropertyRef Name="I_IDCANTON" />
+              <PropertyRef Name="I_IDPROVINCIA" />
+            </Principal>
+            <Dependent Role="CAT_DISTRITO">
+              <PropertyRef Name="I_IDCANTON" />
+              <PropertyRef Name="I_IDPROVINCIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CAT_COMU_REFERENCE_CAT_DIST">
+          <End Type="INAMU_COMUNModel.CAT_DISTRITO" Role="CAT_DISTRITO" Multiplicity="1" />
+          <End Type="INAMU_COMUNModel.CAT_COMUNIDAD" Role="CAT_COMUNIDAD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_DISTRITO">
+              <PropertyRef Name="I_IDDISTRITO" />
+              <PropertyRef Name="I_IDCANTON" />
+              <PropertyRef Name="I_IDPROVINCIA" />
+            </Principal>
+            <Dependent Role="CAT_COMUNIDAD">
+              <PropertyRef Name="I_IDDISTRITO" />
+              <PropertyRef Name="I_IDCANTON" />
+              <PropertyRef Name="I_IDPROVINCIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CAT_COMU_REFERENCE_CAT_REGI">
+          <End Type="INAMU_COMUNModel.CAT_REGION" Role="CAT_REGION" Multiplicity="0..1" />
+          <End Type="INAMU_COMUNModel.CAT_DISTRITO" Role="CAT_DISTRITO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_REGION">
+              <PropertyRef Name="I_IDREGION" />
+            </Principal>
+            <Dependent Role="CAT_DISTRITO">
+              <PropertyRef Name="I_IDREGION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="spConsultarPadron_Result">
+          <Property Type="String" Name="CEDULA" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="SEXO" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="NOMBRE" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="AP1" Nullable="true" MaxLength="26" />
+          <Property Type="String" Name="AP2" Nullable="true" MaxLength="26" />
+        </ComplexType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="INAMU_COMUNModelStoreContainer" CdmEntityContainer="INAMU_COMUNEntities">
+          <EntitySetMapping Name="CAT_CANTON">
+            <EntityTypeMapping TypeName="INAMU_COMUNModel.CAT_CANTON">
+              <MappingFragment StoreEntitySet="CAT_CANTON">
+                <ScalarProperty Name="VC_DESCRIPCION" ColumnName="VC_DESCRIPCION" />
+                <ScalarProperty Name="I_IDPROVINCIA" ColumnName="I_IDPROVINCIA" />
+                <ScalarProperty Name="I_IDCANTON" ColumnName="I_IDCANTON" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAT_COMUNIDAD">
+            <EntityTypeMapping TypeName="INAMU_COMUNModel.CAT_COMUNIDAD">
+              <MappingFragment StoreEntitySet="CAT_COMUNIDAD">
+                <ScalarProperty Name="VC_DESCRIPCION" ColumnName="VC_DESCRIPCION" />
+                <ScalarProperty Name="I_IDPROVINCIA" ColumnName="I_IDPROVINCIA" />
+                <ScalarProperty Name="I_IDCANTON" ColumnName="I_IDCANTON" />
+                <ScalarProperty Name="I_IDDISTRITO" ColumnName="I_IDDISTRITO" />
+                <ScalarProperty Name="I_IDCOMUNIDAD" ColumnName="I_IDCOMUNIDAD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAT_DISTRITO">
+            <EntityTypeMapping TypeName="INAMU_COMUNModel.CAT_DISTRITO">
+              <MappingFragment StoreEntitySet="CAT_DISTRITO">
+                <ScalarProperty Name="VC_DESCRIPCION" ColumnName="VC_DESCRIPCION" />
+                <ScalarProperty Name="I_IDREGION" ColumnName="I_IDREGION" />
+                <ScalarProperty Name="I_IDPROVINCIA" ColumnName="I_IDPROVINCIA" />
+                <ScalarProperty Name="I_IDCANTON" ColumnName="I_IDCANTON" />
+                <ScalarProperty Name="I_IDDISTRITO" ColumnName="I_IDDISTRITO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAT_PAIS">
+            <EntityTypeMapping TypeName="INAMU_COMUNModel.CAT_PAIS">
+              <MappingFragment StoreEntitySet="CAT_PAIS">
+                <ScalarProperty Name="VC_DESCRIPCION" ColumnName="VC_DESCRIPCION" />
+                <ScalarProperty Name="I_IDPAIS" ColumnName="I_IDPAIS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAT_PROVINCIA">
+            <EntityTypeMapping TypeName="INAMU_COMUNModel.CAT_PROVINCIA">
+              <MappingFragment StoreEntitySet="CAT_PROVINCIA">
+                <ScalarProperty Name="VC_DESCRIPCION" ColumnName="VC_DESCRIPCION" />
+                <ScalarProperty Name="I_IDPROVINCIA" ColumnName="I_IDPROVINCIA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAT_REGION">
+            <EntityTypeMapping TypeName="INAMU_COMUNModel.CAT_REGION">
+              <MappingFragment StoreEntitySet="CAT_REGION">
+                <ScalarProperty Name="VC_DESCRIPCION" ColumnName="VC_DESCRIPCION" />
+                <ScalarProperty Name="I_IDREGION" ColumnName="I_IDREGION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spConsultarPadron" FunctionName="INAMU_COMUNModel.Store.spConsultarPadron">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="INAMU_COMUNModel.spConsultarPadron_Result">
+                <ScalarProperty Name="CEDULA" ColumnName="CEDULA" />
+                <ScalarProperty Name="SEXO" ColumnName="SEXO" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="AP1" ColumnName="AP1" />
+                <ScalarProperty Name="AP2" ColumnName="AP2" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

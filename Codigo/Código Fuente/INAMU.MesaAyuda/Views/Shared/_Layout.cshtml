@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIPAMU</title>
+    @*@Styles.Render("~/Content/css")*@
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/animate.min.css" rel="stylesheet" />
+    <link href="~/Content/light-bootstrap-dashboard.css" rel="stylesheet" />
+    <link href="~/Content/pe-icon-7-stroke.css" rel="stylesheet" />
+    <link href="~/Content/demo.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-formhelpers.css" rel="stylesheet" />
+    <link href="~/Content/remodal-default-theme.css" rel="stylesheet" />
+    <link href="~/Content/remodal.css" rel="stylesheet" />
+    <link href="~/Content/responsiveslides.css" rel="stylesheet" />
+    <link href="~/Content/selectize.bootstrap3.css" rel="stylesheet" />
+    <link href="~/Content/leaflet.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+
+
+    <script src="~/Scripts/detect.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/widgets.js"></script>
+    <script src="~/Scripts/bootstrap-formhelpers.js"></script>
+    <script src="~/Scripts/parsley.js"></script>
+    <script src="~/Scripts/es.js"></script>
+    <script src="~/Scripts/remodal.min.js"></script>
+    @*<script src="~/Scripts/bootstrap-filestyle.min.js"></script>*@
+    <script src="~/Scripts/selectize.min.js"></script>
+    <link href="~/Content/tablas.css" rel="stylesheet" />
+    <!-- Bootstrap Material Design -->
+    <script src="~/Scripts/INAMU.datatables.min.js"></script>
+    <script src="~/Scripts/leaflet.js"></script>
+    <script src="~/Scripts/Sortable.min.js"></script>
+    <script src="~/Scripts/jquery.paginate.min.js"></script>
+
+
+    <script type="text/javascript">
+        function PrevenirCaracteresInvalidos() {
+            $prevent_single_double_quote = function (e) {
+                var element = e;
+                setTimeout(function () {
+                    var regexFormat = /^[a-zA-Z0-9@@.;:/\- ]*$/;
+                    var text = element.val();
+                    if (!regexFormat.test(text)) {
+                        //if contains single or double quotes.
+                        text = text.substring(0, (text.length - 1));
+                    }
+                    element.val(text);
+                }, 1);
+            };
+            $('textarea').on('change', function () {
+                $prevent_single_double_quote($(this));
+            });
+            $('textarea').on('keyup', function () {
+                $prevent_single_double_quote($(this));
+            });
+            $('input').on('change', function () {
+                $prevent_single_double_quote($(this));
+            });
+            $('input').on('keyup', function () {
+                $prevent_single_double_quote($(this));
+            });
+            $('.scle').on('keyup', function () {
+                $prevent_single_double_quote($(this));
+            });
+        }
+
+    </script>
+    <style>
+        
+    </style>
+</head>
+
+<body style="padding-bottom:1px; padding-top: 1px; overflow-x: hidden; background-color: #0098c8 !important;">
+
+    <div class="container" style="width:100%">
+        <div>
+            @RenderBody()
+            @*<hr />*@
+
+        </div>
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIPAMU</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/animate.min.css" rel="stylesheet" />
+    <link href="~/Content/light-bootstrap-dashboard.css" rel="stylesheet" />
+    <link href="~/Content/pe-icon-7-stroke.css" rel="stylesheet" />
+    <link href="~/Content/demo.css" rel="stylesheet" />
+    <link href="~/Content/remodal-default-theme.css" rel="stylesheet" />
+    <link href="~/Content/remodal.css" rel="stylesheet"/>
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    @*<link href="~/Content/mdb.min.css" rel="stylesheet" />*@
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <script src="~/Scripts/detect.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/widgets.js"></script>
+    <script src="~/Scripts/parsley.js"></script>
+    <script src="~/Scripts/es.js"></script>
+    <script src="~/Scripts/remodal.min.js"></script>
+    @*<script src="~/Scripts/mdb.min.js"></script>*@
+    <script src="~/Scripts/notify.js"></script>
+    <script src="~/Scripts/loadingoverlay.min.js"></script>
+    <!-- Bootstrap -->
+    <!-- Bootstrap Material Design -->
+    @*<link href="~/Content/bootstrap-material-design.min.css" rel="stylesheet" />
+        <link href="~/Content/ripples.min.css" rel="stylesheet" />*@
+
+</head>
+<body style="background-color: white !important; margin-top: 1px !important; padding-top: 1px !important">
+    <div class="container body-content" style="padding-top: 1px">
+        @RenderBody()
+        @*<hr />*@
+        <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+            <div class="container" style="color:#0098c8;text-align:center">
+                <small>@DateTime.Now.Year - INAMU Costa Rica Copyright-Todos los derechos reservados</small>
+            </div>
+        </nav>
+    </div>
+
+</body>
+</html>

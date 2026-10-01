@@ -1,0 +1,1608 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="INAMU_SOPORTEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CAT_NIVEL_ESCALAMIENTO">
+          <Key>
+            <PropertyRef Name="PK_NIVEL_ESCALAMIENTO" />
+          </Key>
+          <Property Name="PK_NIVEL_ESCALAMIENTO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VC_NOMBRE" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="VC_DESCRIPCION" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="I_ORDEN" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TBL_ACCION">
+          <Key>
+            <PropertyRef Name="PK_ACCION" />
+          </Key>
+          <Property Name="PK_ACCION" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VC_CONTROLADOR" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="VC_ACCION" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="VC_DESCRIPCION" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="TBL_BITACORA">
+          <Key>
+            <PropertyRef Name="PK_BITACORA" />
+          </Key>
+          <Property Name="PK_BITACORA" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DT_FECHAEVENTO" Type="datetime" Nullable="false" />
+          <Property Name="FK_TIPOEVENTO" Type="int" Nullable="false" />
+          <Property Name="FK_USUARIO" Type="int" />
+          <Property Name="VC_DETALLE" Type="varchar" MaxLength="500" />
+          <Property Name="VC_DIRECCIONIP" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TBL_CATALOGO">
+          <Key>
+            <PropertyRef Name="PK_CATALOGO" />
+          </Key>
+          <Property Name="PK_CATALOGO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VC_NOMBRECATALOGO" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FK_CATALOGOPADRE" Type="int" />
+        </EntityType>
+        <EntityType Name="TBL_EQUIPO">
+          <Key>
+            <PropertyRef Name="PK_EQUIPO" />
+          </Key>
+          <Property Name="PK_EQUIPO" Type="int" Nullable="false" />
+          <Property Name="FK_TIPO_EQUIPO" Type="int" Nullable="false" />
+          <Property Name="VC_NOMBRE" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="VC_DESCRIPCION" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="VC_PLACA" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="VC_NUMERO_SERIE" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="B_ACTIVO" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TBL_ROL">
+          <Key>
+            <PropertyRef Name="PK_ROL" />
+          </Key>
+          <Property Name="PK_ROL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VC_NOMBRE" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="VC_DESCRIPCION" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FK_NIVEL_ESCALAMIENTO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TBL_ROLACCION">
+          <Key>
+            <PropertyRef Name="PK_ROLACCION" />
+          </Key>
+          <Property Name="PK_ROLACCION" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_ROL" Type="int" Nullable="false" />
+          <Property Name="FK_ACCION" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TBL_ROLUSUARIO">
+          <Key>
+            <PropertyRef Name="PK_ROLUSUARIO" />
+          </Key>
+          <Property Name="PK_ROLUSUARIO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_USUARIO" Type="int" Nullable="false" />
+          <Property Name="FK_ROL" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TBL_TICKET">
+          <Key>
+            <PropertyRef Name="PK_TICKET" />
+          </Key>
+          <Property Name="PK_TICKET" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_USUARIO_SOLICITA" Type="int" Nullable="false" />
+          <Property Name="DT_FECHA_CREACION" Type="datetime" Nullable="false" />
+          <Property Name="FK_URGENCIA" Type="int" Nullable="false" />
+          <Property Name="FK_UNIDAD_SOLICITA" Type="int" Nullable="false" />
+          <Property Name="VC_DESCRIPCION" Type="varchar(max)" Nullable="false" />
+          <Property Name="FK_ESTADO" Type="int" Nullable="false" />
+          <Property Name="FK_USUARIO_ASIGNADO" Type="int" Nullable="false" />
+          <Property Name="FK_TIPO_PROBLEMA" Type="int" Nullable="false" />
+          <Property Name="VC_PLACA_EQUIPO" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="TBL_TICKET_ARCHIVO">
+          <Key>
+            <PropertyRef Name="PK_TICKET_ARCHIVO" />
+          </Key>
+          <Property Name="PK_TICKET_ARCHIVO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_TICKET" Type="int" Nullable="false" />
+          <Property Name="VC_URL_ARCHIVO" Type="varchar" MaxLength="2000" Nullable="false" />
+          <Property Name="FK_TIPO_ARCHIVO" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'INAMU_MESA_AYUDA.dbo.TBL_TICKET_ASIGNACION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TBL_TICKET_ASIGNACION">
+          <Key>
+            <PropertyRef Name="FK_TICKET" />
+            <PropertyRef Name="FK_USUARIO_SOLICITA" />
+            <PropertyRef Name="FK_USUARIO" />
+            <PropertyRef Name="FK_ESTADO_ASIGNACION" />
+            <PropertyRef Name="DT_FECHA_SOLICITUD" />
+          </Key>
+          <Property Name="FK_TICKET" Type="int" Nullable="false" />
+          <Property Name="FK_USUARIO_SOLICITA" Type="int" Nullable="false" />
+          <Property Name="FK_USUARIO" Type="int" Nullable="false" />
+          <Property Name="VC_COMENTARIOS" Type="varchar" MaxLength="500" />
+          <Property Name="FK_ESTADO_ASIGNACION" Type="int" Nullable="false" />
+          <Property Name="DT_FECHA_SOLICITUD" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TBL_TICKET_EQUIPO">
+          <Key>
+            <PropertyRef Name="PK_TICKET_EQUIPO" />
+          </Key>
+          <Property Name="PK_TICKET_EQUIPO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_TICKET" Type="int" Nullable="false" />
+          <Property Name="FK_EQUIPO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TBL_TICKET_SEGUIMIENTO">
+          <Key>
+            <PropertyRef Name="PK_TICKET_SEGUIMIENTO" />
+          </Key>
+          <Property Name="PK_TICKET_SEGUIMIENTO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_TICKET" Type="int" Nullable="false" />
+          <Property Name="VC_CONTENIDO" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="FK_USUARIO_REGISTRA" Type="int" Nullable="false" />
+          <Property Name="DT_FECHA_EVENTO" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TBL_UNIDAD">
+          <Key>
+            <PropertyRef Name="PK_UNIDAD" />
+          </Key>
+          <Property Name="PK_UNIDAD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VC_CODIGO" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="VC_DESCRIPCION" Type="nvarchar" MaxLength="100" />
+          <Property Name="VC_PREFIJO" Type="nvarchar" MaxLength="50" />
+          <Property Name="I_NUMERO" Type="int" />
+          <Property Name="I_ANNO" Type="int" />
+        </EntityType>
+        <EntityType Name="TBL_USUARIO">
+          <Key>
+            <PropertyRef Name="PK_USUARIO" />
+          </Key>
+          <Property Name="PK_USUARIO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VC_USUARIO" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="DT_FECHAREGISTRO" Type="datetime" Nullable="false" />
+          <Property Name="FK_UNIDAD" Type="int" Nullable="false" />
+          <Property Name="VC_NOMBRE" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="VC_APELLIDO1" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="VC_APELLIDO2" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IM_CLAVE" Type="varbinary" MaxLength="1000" Nullable="false" />
+          <Property Name="IM_SALT1" Type="varbinary" MaxLength="100" Nullable="false" />
+          <Property Name="IM_SALT2" Type="varbinary" MaxLength="100" Nullable="false" />
+          <Property Name="B_EXTERNO" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TBL_USUARIO_EQUIPO">
+          <Key>
+            <PropertyRef Name="PK_EQUIPO_USUARIO" />
+          </Key>
+          <Property Name="PK_EQUIPO_USUARIO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_USUARIO" Type="int" Nullable="false" />
+          <Property Name="FK_EQUIPO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TBL_VALORCATALOGO">
+          <Key>
+            <PropertyRef Name="PK_VALORCATALOGO" />
+          </Key>
+          <Property Name="PK_VALORCATALOGO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_CATALOGO" Type="int" Nullable="false" />
+          <Property Name="VC_VALOR1" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="VC_VALOR2" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <Association Name="FK_TBL_EQUIPO_TBL_VALORCATALOGO">
+          <End Role="TBL_VALORCATALOGO" Type="Self.TBL_VALORCATALOGO" Multiplicity="1" />
+          <End Role="TBL_EQUIPO" Type="Self.TBL_EQUIPO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_VALORCATALOGO">
+              <PropertyRef Name="PK_VALORCATALOGO" />
+            </Principal>
+            <Dependent Role="TBL_EQUIPO">
+              <PropertyRef Name="FK_TIPO_EQUIPO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_ROL_CAT_NIVEL_ESCALAMIENTO">
+          <End Role="CAT_NIVEL_ESCALAMIENTO" Type="Self.CAT_NIVEL_ESCALAMIENTO" Multiplicity="1" />
+          <End Role="TBL_ROL" Type="Self.TBL_ROL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_NIVEL_ESCALAMIENTO">
+              <PropertyRef Name="PK_NIVEL_ESCALAMIENTO" />
+            </Principal>
+            <Dependent Role="TBL_ROL">
+              <PropertyRef Name="FK_NIVEL_ESCALAMIENTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_ARCHIVO_TBL_TICKET">
+          <End Role="TBL_TICKET" Type="Self.TBL_TICKET" Multiplicity="1" />
+          <End Role="TBL_TICKET_ARCHIVO" Type="Self.TBL_TICKET_ARCHIVO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_TICKET">
+              <PropertyRef Name="PK_TICKET" />
+            </Principal>
+            <Dependent Role="TBL_TICKET_ARCHIVO">
+              <PropertyRef Name="FK_TICKET" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_ARCHIVO_TBL_VALORCATALOGO">
+          <End Role="TBL_VALORCATALOGO" Type="Self.TBL_VALORCATALOGO" Multiplicity="1" />
+          <End Role="TBL_TICKET_ARCHIVO" Type="Self.TBL_TICKET_ARCHIVO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_VALORCATALOGO">
+              <PropertyRef Name="PK_VALORCATALOGO" />
+            </Principal>
+            <Dependent Role="TBL_TICKET_ARCHIVO">
+              <PropertyRef Name="FK_TIPO_ARCHIVO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_ASIGNACION_TBL_TICKET">
+          <End Role="TBL_TICKET" Type="Self.TBL_TICKET" Multiplicity="1" />
+          <End Role="TBL_TICKET_ASIGNACION" Type="Self.TBL_TICKET_ASIGNACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_TICKET">
+              <PropertyRef Name="PK_TICKET" />
+            </Principal>
+            <Dependent Role="TBL_TICKET_ASIGNACION">
+              <PropertyRef Name="FK_TICKET" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_ASIGNACION_TBL_USUARIO">
+          <End Role="TBL_USUARIO" Type="Self.TBL_USUARIO" Multiplicity="1" />
+          <End Role="TBL_TICKET_ASIGNACION" Type="Self.TBL_TICKET_ASIGNACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_USUARIO">
+              <PropertyRef Name="PK_USUARIO" />
+            </Principal>
+            <Dependent Role="TBL_TICKET_ASIGNACION">
+              <PropertyRef Name="FK_USUARIO_SOLICITA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_EQUIPO_TBL_EQUIPO">
+          <End Role="TBL_EQUIPO" Type="Self.TBL_EQUIPO" Multiplicity="1" />
+          <End Role="TBL_TICKET_EQUIPO" Type="Self.TBL_TICKET_EQUIPO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_EQUIPO">
+              <PropertyRef Name="PK_EQUIPO" />
+            </Principal>
+            <Dependent Role="TBL_TICKET_EQUIPO">
+              <PropertyRef Name="FK_EQUIPO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_EQUIPO_TBL_TICKET">
+          <End Role="TBL_TICKET" Type="Self.TBL_TICKET" Multiplicity="1" />
+          <End Role="TBL_TICKET_EQUIPO" Type="Self.TBL_TICKET_EQUIPO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_TICKET">
+              <PropertyRef Name="PK_TICKET" />
+            </Principal>
+            <Dependent Role="TBL_TICKET_EQUIPO">
+              <PropertyRef Name="FK_TICKET" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_ESCALAMIENTO_CAT_NIVEL_ESCALAMIENTO1">
+          <End Role="TBL_USUARIO" Type="Self.TBL_USUARIO" Multiplicity="1" />
+          <End Role="TBL_TICKET_ASIGNACION" Type="Self.TBL_TICKET_ASIGNACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_USUARIO">
+              <PropertyRef Name="PK_USUARIO" />
+            </Principal>
+            <Dependent Role="TBL_TICKET_ASIGNACION">
+              <PropertyRef Name="FK_USUARIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_ESCALAMIENTO_TBL_VALORCATALOGO">
+          <End Role="TBL_VALORCATALOGO" Type="Self.TBL_VALORCATALOGO" Multiplicity="1" />
+          <End Role="TBL_TICKET_ASIGNACION" Type="Self.TBL_TICKET_ASIGNACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_VALORCATALOGO">
+              <PropertyRef Name="PK_VALORCATALOGO" />
+            </Principal>
+            <Dependent Role="TBL_TICKET_ASIGNACION">
+              <PropertyRef Name="FK_ESTADO_ASIGNACION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_SEGUIMIENTO_TBL_TICKET">
+          <End Role="TBL_TICKET" Type="Self.TBL_TICKET" Multiplicity="1" />
+          <End Role="TBL_TICKET_SEGUIMIENTO" Type="Self.TBL_TICKET_SEGUIMIENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_TICKET">
+              <PropertyRef Name="PK_TICKET" />
+            </Principal>
+            <Dependent Role="TBL_TICKET_SEGUIMIENTO">
+              <PropertyRef Name="FK_TICKET" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_SEGUIMIENTO_TBL_USUARIO">
+          <End Role="TBL_USUARIO" Type="Self.TBL_USUARIO" Multiplicity="1" />
+          <End Role="TBL_TICKET_SEGUIMIENTO" Type="Self.TBL_TICKET_SEGUIMIENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_USUARIO">
+              <PropertyRef Name="PK_USUARIO" />
+            </Principal>
+            <Dependent Role="TBL_TICKET_SEGUIMIENTO">
+              <PropertyRef Name="FK_USUARIO_REGISTRA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_TBL_UNIDAD">
+          <End Role="TBL_UNIDAD" Type="Self.TBL_UNIDAD" Multiplicity="1" />
+          <End Role="TBL_TICKET" Type="Self.TBL_TICKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_UNIDAD">
+              <PropertyRef Name="PK_UNIDAD" />
+            </Principal>
+            <Dependent Role="TBL_TICKET">
+              <PropertyRef Name="FK_UNIDAD_SOLICITA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_TBL_USUARIO">
+          <End Role="TBL_USUARIO" Type="Self.TBL_USUARIO" Multiplicity="1" />
+          <End Role="TBL_TICKET" Type="Self.TBL_TICKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_USUARIO">
+              <PropertyRef Name="PK_USUARIO" />
+            </Principal>
+            <Dependent Role="TBL_TICKET">
+              <PropertyRef Name="FK_USUARIO_SOLICITA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_TBL_USUARIO1">
+          <End Role="TBL_USUARIO" Type="Self.TBL_USUARIO" Multiplicity="1" />
+          <End Role="TBL_TICKET" Type="Self.TBL_TICKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_USUARIO">
+              <PropertyRef Name="PK_USUARIO" />
+            </Principal>
+            <Dependent Role="TBL_TICKET">
+              <PropertyRef Name="FK_USUARIO_ASIGNADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_TBL_VALORCATALOGO">
+          <End Role="TBL_VALORCATALOGO" Type="Self.TBL_VALORCATALOGO" Multiplicity="1" />
+          <End Role="TBL_TICKET" Type="Self.TBL_TICKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_VALORCATALOGO">
+              <PropertyRef Name="PK_VALORCATALOGO" />
+            </Principal>
+            <Dependent Role="TBL_TICKET">
+              <PropertyRef Name="FK_URGENCIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_TBL_VALORCATALOGO1">
+          <End Role="TBL_VALORCATALOGO" Type="Self.TBL_VALORCATALOGO" Multiplicity="1" />
+          <End Role="TBL_TICKET" Type="Self.TBL_TICKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_VALORCATALOGO">
+              <PropertyRef Name="PK_VALORCATALOGO" />
+            </Principal>
+            <Dependent Role="TBL_TICKET">
+              <PropertyRef Name="FK_ESTADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_USUARIO_EQUIPO_TBL_EQUIPO">
+          <End Role="TBL_EQUIPO" Type="Self.TBL_EQUIPO" Multiplicity="1" />
+          <End Role="TBL_USUARIO_EQUIPO" Type="Self.TBL_USUARIO_EQUIPO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_EQUIPO">
+              <PropertyRef Name="PK_EQUIPO" />
+            </Principal>
+            <Dependent Role="TBL_USUARIO_EQUIPO">
+              <PropertyRef Name="FK_EQUIPO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_USUARIO_EQUIPO_TBL_USUARIO">
+          <End Role="TBL_USUARIO" Type="Self.TBL_USUARIO" Multiplicity="1" />
+          <End Role="TBL_USUARIO_EQUIPO" Type="Self.TBL_USUARIO_EQUIPO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_USUARIO">
+              <PropertyRef Name="PK_USUARIO" />
+            </Principal>
+            <Dependent Role="TBL_USUARIO_EQUIPO">
+              <PropertyRef Name="FK_USUARIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLBITACORA_TBLVALORCATALOGO">
+          <End Role="TBL_VALORCATALOGO" Type="Self.TBL_VALORCATALOGO" Multiplicity="1" />
+          <End Role="TBL_BITACORA" Type="Self.TBL_BITACORA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_VALORCATALOGO">
+              <PropertyRef Name="PK_VALORCATALOGO" />
+            </Principal>
+            <Dependent Role="TBL_BITACORA">
+              <PropertyRef Name="FK_TIPOEVENTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLROLACCION_TBLACCION">
+          <End Role="TBL_ACCION" Type="Self.TBL_ACCION" Multiplicity="1" />
+          <End Role="TBL_ROLACCION" Type="Self.TBL_ROLACCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_ACCION">
+              <PropertyRef Name="PK_ACCION" />
+            </Principal>
+            <Dependent Role="TBL_ROLACCION">
+              <PropertyRef Name="FK_ACCION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLROLACCION_TBLROL">
+          <End Role="TBL_ROL" Type="Self.TBL_ROL" Multiplicity="1" />
+          <End Role="TBL_ROLACCION" Type="Self.TBL_ROLACCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_ROL">
+              <PropertyRef Name="PK_ROL" />
+            </Principal>
+            <Dependent Role="TBL_ROLACCION">
+              <PropertyRef Name="FK_ROL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLROLUSUARIO_TBLROL">
+          <End Role="TBL_ROL" Type="Self.TBL_ROL" Multiplicity="1" />
+          <End Role="TBL_ROLUSUARIO" Type="Self.TBL_ROLUSUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_ROL">
+              <PropertyRef Name="PK_ROL" />
+            </Principal>
+            <Dependent Role="TBL_ROLUSUARIO">
+              <PropertyRef Name="FK_ROL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLROLUSUARIO_TBLUSUARIO">
+          <End Role="TBL_USUARIO" Type="Self.TBL_USUARIO" Multiplicity="1" />
+          <End Role="TBL_ROLUSUARIO" Type="Self.TBL_ROLUSUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_USUARIO">
+              <PropertyRef Name="PK_USUARIO" />
+            </Principal>
+            <Dependent Role="TBL_ROLUSUARIO">
+              <PropertyRef Name="FK_USUARIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLUSUARIO_TBLUNIDAD">
+          <End Role="TBL_UNIDAD" Type="Self.TBL_UNIDAD" Multiplicity="1" />
+          <End Role="TBL_USUARIO" Type="Self.TBL_USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_UNIDAD">
+              <PropertyRef Name="PK_UNIDAD" />
+            </Principal>
+            <Dependent Role="TBL_USUARIO">
+              <PropertyRef Name="FK_UNIDAD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLVALORCATALOGO_TBLCATALOGO">
+          <End Role="TBL_CATALOGO" Type="Self.TBL_CATALOGO" Multiplicity="1" />
+          <End Role="TBL_VALORCATALOGO" Type="Self.TBL_VALORCATALOGO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_CATALOGO">
+              <PropertyRef Name="PK_CATALOGO" />
+            </Principal>
+            <Dependent Role="TBL_VALORCATALOGO">
+              <PropertyRef Name="FK_CATALOGO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="INAMU_SOPORTEModelStoreContainer">
+          <EntitySet Name="CAT_NIVEL_ESCALAMIENTO" EntityType="Self.CAT_NIVEL_ESCALAMIENTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_ACCION" EntityType="Self.TBL_ACCION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_BITACORA" EntityType="Self.TBL_BITACORA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_CATALOGO" EntityType="Self.TBL_CATALOGO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_EQUIPO" EntityType="Self.TBL_EQUIPO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_ROL" EntityType="Self.TBL_ROL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_ROLACCION" EntityType="Self.TBL_ROLACCION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_ROLUSUARIO" EntityType="Self.TBL_ROLUSUARIO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_TICKET" EntityType="Self.TBL_TICKET" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_TICKET_ARCHIVO" EntityType="Self.TBL_TICKET_ARCHIVO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_TICKET_EQUIPO" EntityType="Self.TBL_TICKET_EQUIPO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_TICKET_SEGUIMIENTO" EntityType="Self.TBL_TICKET_SEGUIMIENTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_UNIDAD" EntityType="Self.TBL_UNIDAD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_USUARIO" EntityType="Self.TBL_USUARIO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_USUARIO_EQUIPO" EntityType="Self.TBL_USUARIO_EQUIPO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_VALORCATALOGO" EntityType="Self.TBL_VALORCATALOGO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_TICKET_ASIGNACION" EntityType="Self.TBL_TICKET_ASIGNACION" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[TBL_TICKET_ASIGNACION].[FK_TICKET] AS [FK_TICKET], 
+[TBL_TICKET_ASIGNACION].[FK_USUARIO_SOLICITA] AS [FK_USUARIO_SOLICITA], 
+[TBL_TICKET_ASIGNACION].[FK_USUARIO] AS [FK_USUARIO], 
+[TBL_TICKET_ASIGNACION].[VC_COMENTARIOS] AS [VC_COMENTARIOS], 
+[TBL_TICKET_ASIGNACION].[FK_ESTADO_ASIGNACION] AS [FK_ESTADO_ASIGNACION], 
+[TBL_TICKET_ASIGNACION].[DT_FECHA_SOLICITUD] AS [DT_FECHA_SOLICITUD]
+FROM [dbo].[TBL_TICKET_ASIGNACION] AS [TBL_TICKET_ASIGNACION]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_TBL_EQUIPO_TBL_VALORCATALOGO" Association="Self.FK_TBL_EQUIPO_TBL_VALORCATALOGO">
+            <End Role="TBL_VALORCATALOGO" EntitySet="TBL_VALORCATALOGO" />
+            <End Role="TBL_EQUIPO" EntitySet="TBL_EQUIPO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_ROL_CAT_NIVEL_ESCALAMIENTO" Association="Self.FK_TBL_ROL_CAT_NIVEL_ESCALAMIENTO">
+            <End Role="CAT_NIVEL_ESCALAMIENTO" EntitySet="CAT_NIVEL_ESCALAMIENTO" />
+            <End Role="TBL_ROL" EntitySet="TBL_ROL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_ARCHIVO_TBL_TICKET" Association="Self.FK_TBL_TICKET_ARCHIVO_TBL_TICKET">
+            <End Role="TBL_TICKET" EntitySet="TBL_TICKET" />
+            <End Role="TBL_TICKET_ARCHIVO" EntitySet="TBL_TICKET_ARCHIVO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_ARCHIVO_TBL_VALORCATALOGO" Association="Self.FK_TBL_TICKET_ARCHIVO_TBL_VALORCATALOGO">
+            <End Role="TBL_VALORCATALOGO" EntitySet="TBL_VALORCATALOGO" />
+            <End Role="TBL_TICKET_ARCHIVO" EntitySet="TBL_TICKET_ARCHIVO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_ASIGNACION_TBL_TICKET" Association="Self.FK_TBL_TICKET_ASIGNACION_TBL_TICKET">
+            <End Role="TBL_TICKET" EntitySet="TBL_TICKET" />
+            <End Role="TBL_TICKET_ASIGNACION" EntitySet="TBL_TICKET_ASIGNACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_ASIGNACION_TBL_USUARIO" Association="Self.FK_TBL_TICKET_ASIGNACION_TBL_USUARIO">
+            <End Role="TBL_USUARIO" EntitySet="TBL_USUARIO" />
+            <End Role="TBL_TICKET_ASIGNACION" EntitySet="TBL_TICKET_ASIGNACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_EQUIPO_TBL_EQUIPO" Association="Self.FK_TBL_TICKET_EQUIPO_TBL_EQUIPO">
+            <End Role="TBL_EQUIPO" EntitySet="TBL_EQUIPO" />
+            <End Role="TBL_TICKET_EQUIPO" EntitySet="TBL_TICKET_EQUIPO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_EQUIPO_TBL_TICKET" Association="Self.FK_TBL_TICKET_EQUIPO_TBL_TICKET">
+            <End Role="TBL_TICKET" EntitySet="TBL_TICKET" />
+            <End Role="TBL_TICKET_EQUIPO" EntitySet="TBL_TICKET_EQUIPO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_ESCALAMIENTO_CAT_NIVEL_ESCALAMIENTO1" Association="Self.FK_TBL_TICKET_ESCALAMIENTO_CAT_NIVEL_ESCALAMIENTO1">
+            <End Role="TBL_USUARIO" EntitySet="TBL_USUARIO" />
+            <End Role="TBL_TICKET_ASIGNACION" EntitySet="TBL_TICKET_ASIGNACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_ESCALAMIENTO_TBL_VALORCATALOGO" Association="Self.FK_TBL_TICKET_ESCALAMIENTO_TBL_VALORCATALOGO">
+            <End Role="TBL_VALORCATALOGO" EntitySet="TBL_VALORCATALOGO" />
+            <End Role="TBL_TICKET_ASIGNACION" EntitySet="TBL_TICKET_ASIGNACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_SEGUIMIENTO_TBL_TICKET" Association="Self.FK_TBL_TICKET_SEGUIMIENTO_TBL_TICKET">
+            <End Role="TBL_TICKET" EntitySet="TBL_TICKET" />
+            <End Role="TBL_TICKET_SEGUIMIENTO" EntitySet="TBL_TICKET_SEGUIMIENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_SEGUIMIENTO_TBL_USUARIO" Association="Self.FK_TBL_TICKET_SEGUIMIENTO_TBL_USUARIO">
+            <End Role="TBL_USUARIO" EntitySet="TBL_USUARIO" />
+            <End Role="TBL_TICKET_SEGUIMIENTO" EntitySet="TBL_TICKET_SEGUIMIENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_TBL_UNIDAD" Association="Self.FK_TBL_TICKET_TBL_UNIDAD">
+            <End Role="TBL_UNIDAD" EntitySet="TBL_UNIDAD" />
+            <End Role="TBL_TICKET" EntitySet="TBL_TICKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_TBL_USUARIO" Association="Self.FK_TBL_TICKET_TBL_USUARIO">
+            <End Role="TBL_USUARIO" EntitySet="TBL_USUARIO" />
+            <End Role="TBL_TICKET" EntitySet="TBL_TICKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_TBL_USUARIO1" Association="Self.FK_TBL_TICKET_TBL_USUARIO1">
+            <End Role="TBL_USUARIO" EntitySet="TBL_USUARIO" />
+            <End Role="TBL_TICKET" EntitySet="TBL_TICKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_TBL_VALORCATALOGO" Association="Self.FK_TBL_TICKET_TBL_VALORCATALOGO">
+            <End Role="TBL_VALORCATALOGO" EntitySet="TBL_VALORCATALOGO" />
+            <End Role="TBL_TICKET" EntitySet="TBL_TICKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_TBL_VALORCATALOGO1" Association="Self.FK_TBL_TICKET_TBL_VALORCATALOGO1">
+            <End Role="TBL_VALORCATALOGO" EntitySet="TBL_VALORCATALOGO" />
+            <End Role="TBL_TICKET" EntitySet="TBL_TICKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_USUARIO_EQUIPO_TBL_EQUIPO" Association="Self.FK_TBL_USUARIO_EQUIPO_TBL_EQUIPO">
+            <End Role="TBL_EQUIPO" EntitySet="TBL_EQUIPO" />
+            <End Role="TBL_USUARIO_EQUIPO" EntitySet="TBL_USUARIO_EQUIPO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_USUARIO_EQUIPO_TBL_USUARIO" Association="Self.FK_TBL_USUARIO_EQUIPO_TBL_USUARIO">
+            <End Role="TBL_USUARIO" EntitySet="TBL_USUARIO" />
+            <End Role="TBL_USUARIO_EQUIPO" EntitySet="TBL_USUARIO_EQUIPO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLBITACORA_TBLVALORCATALOGO" Association="Self.FK_TBLBITACORA_TBLVALORCATALOGO">
+            <End Role="TBL_VALORCATALOGO" EntitySet="TBL_VALORCATALOGO" />
+            <End Role="TBL_BITACORA" EntitySet="TBL_BITACORA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLROLACCION_TBLACCION" Association="Self.FK_TBLROLACCION_TBLACCION">
+            <End Role="TBL_ACCION" EntitySet="TBL_ACCION" />
+            <End Role="TBL_ROLACCION" EntitySet="TBL_ROLACCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLROLACCION_TBLROL" Association="Self.FK_TBLROLACCION_TBLROL">
+            <End Role="TBL_ROL" EntitySet="TBL_ROL" />
+            <End Role="TBL_ROLACCION" EntitySet="TBL_ROLACCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLROLUSUARIO_TBLROL" Association="Self.FK_TBLROLUSUARIO_TBLROL">
+            <End Role="TBL_ROL" EntitySet="TBL_ROL" />
+            <End Role="TBL_ROLUSUARIO" EntitySet="TBL_ROLUSUARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLROLUSUARIO_TBLUSUARIO" Association="Self.FK_TBLROLUSUARIO_TBLUSUARIO">
+            <End Role="TBL_USUARIO" EntitySet="TBL_USUARIO" />
+            <End Role="TBL_ROLUSUARIO" EntitySet="TBL_ROLUSUARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLUSUARIO_TBLUNIDAD" Association="Self.FK_TBLUSUARIO_TBLUNIDAD">
+            <End Role="TBL_UNIDAD" EntitySet="TBL_UNIDAD" />
+            <End Role="TBL_USUARIO" EntitySet="TBL_USUARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLVALORCATALOGO_TBLCATALOGO" Association="Self.FK_TBLVALORCATALOGO_TBLCATALOGO">
+            <End Role="TBL_CATALOGO" EntitySet="TBL_CATALOGO" />
+            <End Role="TBL_VALORCATALOGO" EntitySet="TBL_VALORCATALOGO" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="INAMU_SOPORTEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="INAMU_SOPORTEEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(INAMU_SOPORTEModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(INAMU_SOPORTEModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="CAT_NIVEL_ESCALAMIENTO" EntityType="INAMU_SOPORTEModel.CAT_NIVEL_ESCALAMIENTO" />
+          <EntitySet Name="TBL_ACCION" EntityType="INAMU_SOPORTEModel.TBL_ACCION" />
+          <EntitySet Name="TBL_BITACORA" EntityType="INAMU_SOPORTEModel.TBL_BITACORA" />
+          <EntitySet Name="TBL_CATALOGO" EntityType="INAMU_SOPORTEModel.TBL_CATALOGO" />
+          <EntitySet Name="TBL_EQUIPO" EntityType="INAMU_SOPORTEModel.TBL_EQUIPO" />
+          <EntitySet Name="TBL_ROL" EntityType="INAMU_SOPORTEModel.TBL_ROL" />
+          <EntitySet Name="TBL_ROLACCION" EntityType="INAMU_SOPORTEModel.TBL_ROLACCION" />
+          <EntitySet Name="TBL_ROLUSUARIO" EntityType="INAMU_SOPORTEModel.TBL_ROLUSUARIO" />
+          <EntitySet Name="TBL_TICKET" EntityType="INAMU_SOPORTEModel.TBL_TICKET" />
+          <EntitySet Name="TBL_TICKET_ARCHIVO" EntityType="INAMU_SOPORTEModel.TBL_TICKET_ARCHIVO" />
+          <EntitySet Name="TBL_TICKET_EQUIPO" EntityType="INAMU_SOPORTEModel.TBL_TICKET_EQUIPO" />
+          <EntitySet Name="TBL_TICKET_SEGUIMIENTO" EntityType="INAMU_SOPORTEModel.TBL_TICKET_SEGUIMIENTO" />
+          <EntitySet Name="TBL_UNIDAD" EntityType="INAMU_SOPORTEModel.TBL_UNIDAD" />
+          <EntitySet Name="TBL_USUARIO" EntityType="INAMU_SOPORTEModel.TBL_USUARIO" />
+          <EntitySet Name="TBL_USUARIO_EQUIPO" EntityType="INAMU_SOPORTEModel.TBL_USUARIO_EQUIPO" />
+          <EntitySet Name="TBL_VALORCATALOGO" EntityType="INAMU_SOPORTEModel.TBL_VALORCATALOGO" />
+          <EntitySet Name="TBL_TICKET_ASIGNACION" EntityType="INAMU_SOPORTEModel.TBL_TICKET_ASIGNACION" />
+          <AssociationSet Name="FK_TBL_ROL_CAT_NIVEL_ESCALAMIENTO" Association="INAMU_SOPORTEModel.FK_TBL_ROL_CAT_NIVEL_ESCALAMIENTO">
+            <End Role="CAT_NIVEL_ESCALAMIENTO" EntitySet="CAT_NIVEL_ESCALAMIENTO" />
+            <End Role="TBL_ROL" EntitySet="TBL_ROL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLROLACCION_TBLACCION" Association="INAMU_SOPORTEModel.FK_TBLROLACCION_TBLACCION">
+            <End Role="TBL_ACCION" EntitySet="TBL_ACCION" />
+            <End Role="TBL_ROLACCION" EntitySet="TBL_ROLACCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLBITACORA_TBLVALORCATALOGO" Association="INAMU_SOPORTEModel.FK_TBLBITACORA_TBLVALORCATALOGO">
+            <End Role="TBL_VALORCATALOGO" EntitySet="TBL_VALORCATALOGO" />
+            <End Role="TBL_BITACORA" EntitySet="TBL_BITACORA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLVALORCATALOGO_TBLCATALOGO" Association="INAMU_SOPORTEModel.FK_TBLVALORCATALOGO_TBLCATALOGO">
+            <End Role="TBL_CATALOGO" EntitySet="TBL_CATALOGO" />
+            <End Role="TBL_VALORCATALOGO" EntitySet="TBL_VALORCATALOGO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_EQUIPO_TBL_VALORCATALOGO" Association="INAMU_SOPORTEModel.FK_TBL_EQUIPO_TBL_VALORCATALOGO">
+            <End Role="TBL_VALORCATALOGO" EntitySet="TBL_VALORCATALOGO" />
+            <End Role="TBL_EQUIPO" EntitySet="TBL_EQUIPO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_EQUIPO_TBL_EQUIPO" Association="INAMU_SOPORTEModel.FK_TBL_TICKET_EQUIPO_TBL_EQUIPO">
+            <End Role="TBL_EQUIPO" EntitySet="TBL_EQUIPO" />
+            <End Role="TBL_TICKET_EQUIPO" EntitySet="TBL_TICKET_EQUIPO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_USUARIO_EQUIPO_TBL_EQUIPO" Association="INAMU_SOPORTEModel.FK_TBL_USUARIO_EQUIPO_TBL_EQUIPO">
+            <End Role="TBL_EQUIPO" EntitySet="TBL_EQUIPO" />
+            <End Role="TBL_USUARIO_EQUIPO" EntitySet="TBL_USUARIO_EQUIPO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLROLACCION_TBLROL" Association="INAMU_SOPORTEModel.FK_TBLROLACCION_TBLROL">
+            <End Role="TBL_ROL" EntitySet="TBL_ROL" />
+            <End Role="TBL_ROLACCION" EntitySet="TBL_ROLACCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLROLUSUARIO_TBLROL" Association="INAMU_SOPORTEModel.FK_TBLROLUSUARIO_TBLROL">
+            <End Role="TBL_ROL" EntitySet="TBL_ROL" />
+            <End Role="TBL_ROLUSUARIO" EntitySet="TBL_ROLUSUARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLROLUSUARIO_TBLUSUARIO" Association="INAMU_SOPORTEModel.FK_TBLROLUSUARIO_TBLUSUARIO">
+            <End Role="TBL_USUARIO" EntitySet="TBL_USUARIO" />
+            <End Role="TBL_ROLUSUARIO" EntitySet="TBL_ROLUSUARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_ARCHIVO_TBL_TICKET" Association="INAMU_SOPORTEModel.FK_TBL_TICKET_ARCHIVO_TBL_TICKET">
+            <End Role="TBL_TICKET" EntitySet="TBL_TICKET" />
+            <End Role="TBL_TICKET_ARCHIVO" EntitySet="TBL_TICKET_ARCHIVO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_ASIGNACION_TBL_TICKET" Association="INAMU_SOPORTEModel.FK_TBL_TICKET_ASIGNACION_TBL_TICKET">
+            <End Role="TBL_TICKET" EntitySet="TBL_TICKET" />
+            <End Role="TBL_TICKET_ASIGNACION" EntitySet="TBL_TICKET_ASIGNACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_EQUIPO_TBL_TICKET" Association="INAMU_SOPORTEModel.FK_TBL_TICKET_EQUIPO_TBL_TICKET">
+            <End Role="TBL_TICKET" EntitySet="TBL_TICKET" />
+            <End Role="TBL_TICKET_EQUIPO" EntitySet="TBL_TICKET_EQUIPO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_SEGUIMIENTO_TBL_TICKET" Association="INAMU_SOPORTEModel.FK_TBL_TICKET_SEGUIMIENTO_TBL_TICKET">
+            <End Role="TBL_TICKET" EntitySet="TBL_TICKET" />
+            <End Role="TBL_TICKET_SEGUIMIENTO" EntitySet="TBL_TICKET_SEGUIMIENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_TBL_UNIDAD" Association="INAMU_SOPORTEModel.FK_TBL_TICKET_TBL_UNIDAD">
+            <End Role="TBL_UNIDAD" EntitySet="TBL_UNIDAD" />
+            <End Role="TBL_TICKET" EntitySet="TBL_TICKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_TBL_USUARIO" Association="INAMU_SOPORTEModel.FK_TBL_TICKET_TBL_USUARIO">
+            <End Role="TBL_USUARIO" EntitySet="TBL_USUARIO" />
+            <End Role="TBL_TICKET" EntitySet="TBL_TICKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_TBL_USUARIO1" Association="INAMU_SOPORTEModel.FK_TBL_TICKET_TBL_USUARIO1">
+            <End Role="TBL_USUARIO" EntitySet="TBL_USUARIO" />
+            <End Role="TBL_TICKET" EntitySet="TBL_TICKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_TBL_VALORCATALOGO" Association="INAMU_SOPORTEModel.FK_TBL_TICKET_TBL_VALORCATALOGO">
+            <End Role="TBL_VALORCATALOGO" EntitySet="TBL_VALORCATALOGO" />
+            <End Role="TBL_TICKET" EntitySet="TBL_TICKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_TBL_VALORCATALOGO1" Association="INAMU_SOPORTEModel.FK_TBL_TICKET_TBL_VALORCATALOGO1">
+            <End Role="TBL_VALORCATALOGO" EntitySet="TBL_VALORCATALOGO" />
+            <End Role="TBL_TICKET" EntitySet="TBL_TICKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_ARCHIVO_TBL_VALORCATALOGO" Association="INAMU_SOPORTEModel.FK_TBL_TICKET_ARCHIVO_TBL_VALORCATALOGO">
+            <End Role="TBL_VALORCATALOGO" EntitySet="TBL_VALORCATALOGO" />
+            <End Role="TBL_TICKET_ARCHIVO" EntitySet="TBL_TICKET_ARCHIVO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_SEGUIMIENTO_TBL_USUARIO" Association="INAMU_SOPORTEModel.FK_TBL_TICKET_SEGUIMIENTO_TBL_USUARIO">
+            <End Role="TBL_USUARIO" EntitySet="TBL_USUARIO" />
+            <End Role="TBL_TICKET_SEGUIMIENTO" EntitySet="TBL_TICKET_SEGUIMIENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLUSUARIO_TBLUNIDAD" Association="INAMU_SOPORTEModel.FK_TBLUSUARIO_TBLUNIDAD">
+            <End Role="TBL_UNIDAD" EntitySet="TBL_UNIDAD" />
+            <End Role="TBL_USUARIO" EntitySet="TBL_USUARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_ASIGNACION_TBL_USUARIO" Association="INAMU_SOPORTEModel.FK_TBL_TICKET_ASIGNACION_TBL_USUARIO">
+            <End Role="TBL_USUARIO" EntitySet="TBL_USUARIO" />
+            <End Role="TBL_TICKET_ASIGNACION" EntitySet="TBL_TICKET_ASIGNACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_ESCALAMIENTO_CAT_NIVEL_ESCALAMIENTO1" Association="INAMU_SOPORTEModel.FK_TBL_TICKET_ESCALAMIENTO_CAT_NIVEL_ESCALAMIENTO1">
+            <End Role="TBL_USUARIO" EntitySet="TBL_USUARIO" />
+            <End Role="TBL_TICKET_ASIGNACION" EntitySet="TBL_TICKET_ASIGNACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_USUARIO_EQUIPO_TBL_USUARIO" Association="INAMU_SOPORTEModel.FK_TBL_USUARIO_EQUIPO_TBL_USUARIO">
+            <End Role="TBL_USUARIO" EntitySet="TBL_USUARIO" />
+            <End Role="TBL_USUARIO_EQUIPO" EntitySet="TBL_USUARIO_EQUIPO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_TICKET_ESCALAMIENTO_TBL_VALORCATALOGO" Association="INAMU_SOPORTEModel.FK_TBL_TICKET_ESCALAMIENTO_TBL_VALORCATALOGO">
+            <End Role="TBL_VALORCATALOGO" EntitySet="TBL_VALORCATALOGO" />
+            <End Role="TBL_TICKET_ASIGNACION" EntitySet="TBL_TICKET_ASIGNACION" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="CAT_NIVEL_ESCALAMIENTO">
+          <Key>
+            <PropertyRef Name="PK_NIVEL_ESCALAMIENTO" />
+          </Key>
+          <Property Name="PK_NIVEL_ESCALAMIENTO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VC_NOMBRE" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VC_DESCRIPCION" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="I_ORDEN" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TBL_ROL" Relationship="INAMU_SOPORTEModel.FK_TBL_ROL_CAT_NIVEL_ESCALAMIENTO" FromRole="CAT_NIVEL_ESCALAMIENTO" ToRole="TBL_ROL" />
+        </EntityType>
+        <EntityType Name="TBL_ACCION">
+          <Key>
+            <PropertyRef Name="PK_ACCION" />
+          </Key>
+          <Property Name="PK_ACCION" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VC_CONTROLADOR" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VC_ACCION" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VC_DESCRIPCION" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TBL_ROLACCION" Relationship="INAMU_SOPORTEModel.FK_TBLROLACCION_TBLACCION" FromRole="TBL_ACCION" ToRole="TBL_ROLACCION" />
+        </EntityType>
+        <EntityType Name="TBL_BITACORA">
+          <Key>
+            <PropertyRef Name="PK_BITACORA" />
+          </Key>
+          <Property Name="PK_BITACORA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DT_FECHAEVENTO" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FK_TIPOEVENTO" Type="Int32" Nullable="false" />
+          <Property Name="FK_USUARIO" Type="Int32" />
+          <Property Name="VC_DETALLE" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="VC_DIRECCIONIP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TBL_VALORCATALOGO" Relationship="INAMU_SOPORTEModel.FK_TBLBITACORA_TBLVALORCATALOGO" FromRole="TBL_BITACORA" ToRole="TBL_VALORCATALOGO" />
+        </EntityType>
+        <EntityType Name="TBL_CATALOGO">
+          <Key>
+            <PropertyRef Name="PK_CATALOGO" />
+          </Key>
+          <Property Name="PK_CATALOGO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VC_NOMBRECATALOGO" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FK_CATALOGOPADRE" Type="Int32" />
+          <NavigationProperty Name="TBL_VALORCATALOGO" Relationship="INAMU_SOPORTEModel.FK_TBLVALORCATALOGO_TBLCATALOGO" FromRole="TBL_CATALOGO" ToRole="TBL_VALORCATALOGO" />
+        </EntityType>
+        <EntityType Name="TBL_EQUIPO">
+          <Key>
+            <PropertyRef Name="PK_EQUIPO" />
+          </Key>
+          <Property Name="PK_EQUIPO" Type="Int32" Nullable="false" />
+          <Property Name="FK_TIPO_EQUIPO" Type="Int32" Nullable="false" />
+          <Property Name="VC_NOMBRE" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VC_DESCRIPCION" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="VC_PLACA" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VC_NUMERO_SERIE" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="B_ACTIVO" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="TBL_VALORCATALOGO" Relationship="INAMU_SOPORTEModel.FK_TBL_EQUIPO_TBL_VALORCATALOGO" FromRole="TBL_EQUIPO" ToRole="TBL_VALORCATALOGO" />
+          <NavigationProperty Name="TBL_TICKET_EQUIPO" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_EQUIPO_TBL_EQUIPO" FromRole="TBL_EQUIPO" ToRole="TBL_TICKET_EQUIPO" />
+          <NavigationProperty Name="TBL_USUARIO_EQUIPO" Relationship="INAMU_SOPORTEModel.FK_TBL_USUARIO_EQUIPO_TBL_EQUIPO" FromRole="TBL_EQUIPO" ToRole="TBL_USUARIO_EQUIPO" />
+        </EntityType>
+        <EntityType Name="TBL_ROL">
+          <Key>
+            <PropertyRef Name="PK_ROL" />
+          </Key>
+          <Property Name="PK_ROL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VC_NOMBRE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VC_DESCRIPCION" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FK_NIVEL_ESCALAMIENTO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CAT_NIVEL_ESCALAMIENTO" Relationship="INAMU_SOPORTEModel.FK_TBL_ROL_CAT_NIVEL_ESCALAMIENTO" FromRole="TBL_ROL" ToRole="CAT_NIVEL_ESCALAMIENTO" />
+          <NavigationProperty Name="TBL_ROLACCION" Relationship="INAMU_SOPORTEModel.FK_TBLROLACCION_TBLROL" FromRole="TBL_ROL" ToRole="TBL_ROLACCION" />
+          <NavigationProperty Name="TBL_ROLUSUARIO" Relationship="INAMU_SOPORTEModel.FK_TBLROLUSUARIO_TBLROL" FromRole="TBL_ROL" ToRole="TBL_ROLUSUARIO" />
+        </EntityType>
+        <EntityType Name="TBL_ROLACCION">
+          <Key>
+            <PropertyRef Name="PK_ROLACCION" />
+          </Key>
+          <Property Name="PK_ROLACCION" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_ROL" Type="Int32" Nullable="false" />
+          <Property Name="FK_ACCION" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TBL_ACCION" Relationship="INAMU_SOPORTEModel.FK_TBLROLACCION_TBLACCION" FromRole="TBL_ROLACCION" ToRole="TBL_ACCION" />
+          <NavigationProperty Name="TBL_ROL" Relationship="INAMU_SOPORTEModel.FK_TBLROLACCION_TBLROL" FromRole="TBL_ROLACCION" ToRole="TBL_ROL" />
+        </EntityType>
+        <EntityType Name="TBL_ROLUSUARIO">
+          <Key>
+            <PropertyRef Name="PK_ROLUSUARIO" />
+          </Key>
+          <Property Name="PK_ROLUSUARIO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_USUARIO" Type="Int32" Nullable="false" />
+          <Property Name="FK_ROL" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TBL_ROL" Relationship="INAMU_SOPORTEModel.FK_TBLROLUSUARIO_TBLROL" FromRole="TBL_ROLUSUARIO" ToRole="TBL_ROL" />
+          <NavigationProperty Name="TBL_USUARIO" Relationship="INAMU_SOPORTEModel.FK_TBLROLUSUARIO_TBLUSUARIO" FromRole="TBL_ROLUSUARIO" ToRole="TBL_USUARIO" />
+        </EntityType>
+        <EntityType Name="TBL_TICKET">
+          <Key>
+            <PropertyRef Name="PK_TICKET" />
+          </Key>
+          <Property Name="PK_TICKET" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_USUARIO_SOLICITA" Type="Int32" Nullable="false" />
+          <Property Name="DT_FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FK_URGENCIA" Type="Int32" Nullable="false" />
+          <Property Name="FK_UNIDAD_SOLICITA" Type="Int32" Nullable="false" />
+          <Property Name="VC_DESCRIPCION" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FK_ESTADO" Type="Int32" Nullable="false" />
+          <Property Name="FK_USUARIO_ASIGNADO" Type="Int32" Nullable="false" />
+          <Property Name="FK_TIPO_PROBLEMA" Type="Int32" Nullable="false" />
+          <Property Name="VC_PLACA_EQUIPO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TBL_TICKET_ARCHIVO" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_ARCHIVO_TBL_TICKET" FromRole="TBL_TICKET" ToRole="TBL_TICKET_ARCHIVO" />
+          <NavigationProperty Name="TBL_TICKET_ASIGNACION" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_ASIGNACION_TBL_TICKET" FromRole="TBL_TICKET" ToRole="TBL_TICKET_ASIGNACION" />
+          <NavigationProperty Name="TBL_TICKET_EQUIPO" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_EQUIPO_TBL_TICKET" FromRole="TBL_TICKET" ToRole="TBL_TICKET_EQUIPO" />
+          <NavigationProperty Name="TBL_TICKET_SEGUIMIENTO" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_SEGUIMIENTO_TBL_TICKET" FromRole="TBL_TICKET" ToRole="TBL_TICKET_SEGUIMIENTO" />
+          <NavigationProperty Name="TBL_UNIDAD" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_TBL_UNIDAD" FromRole="TBL_TICKET" ToRole="TBL_UNIDAD" />
+          <NavigationProperty Name="TBL_USUARIO" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_TBL_USUARIO" FromRole="TBL_TICKET" ToRole="TBL_USUARIO" />
+          <NavigationProperty Name="TBL_USUARIO1" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_TBL_USUARIO1" FromRole="TBL_TICKET" ToRole="TBL_USUARIO" />
+          <NavigationProperty Name="TBL_VALORCATALOGO" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_TBL_VALORCATALOGO" FromRole="TBL_TICKET" ToRole="TBL_VALORCATALOGO" />
+          <NavigationProperty Name="TBL_VALORCATALOGO1" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_TBL_VALORCATALOGO1" FromRole="TBL_TICKET" ToRole="TBL_VALORCATALOGO" />
+        </EntityType>
+        <EntityType Name="TBL_TICKET_ARCHIVO">
+          <Key>
+            <PropertyRef Name="PK_TICKET_ARCHIVO" />
+          </Key>
+          <Property Name="PK_TICKET_ARCHIVO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_TICKET" Type="Int32" Nullable="false" />
+          <Property Name="VC_URL_ARCHIVO" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="FK_TIPO_ARCHIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TBL_TICKET" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_ARCHIVO_TBL_TICKET" FromRole="TBL_TICKET_ARCHIVO" ToRole="TBL_TICKET" />
+          <NavigationProperty Name="TBL_VALORCATALOGO" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_ARCHIVO_TBL_VALORCATALOGO" FromRole="TBL_TICKET_ARCHIVO" ToRole="TBL_VALORCATALOGO" />
+        </EntityType>
+        <EntityType Name="TBL_TICKET_EQUIPO">
+          <Key>
+            <PropertyRef Name="PK_TICKET_EQUIPO" />
+          </Key>
+          <Property Name="PK_TICKET_EQUIPO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_TICKET" Type="Int32" Nullable="false" />
+          <Property Name="FK_EQUIPO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TBL_EQUIPO" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_EQUIPO_TBL_EQUIPO" FromRole="TBL_TICKET_EQUIPO" ToRole="TBL_EQUIPO" />
+          <NavigationProperty Name="TBL_TICKET" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_EQUIPO_TBL_TICKET" FromRole="TBL_TICKET_EQUIPO" ToRole="TBL_TICKET" />
+        </EntityType>
+        <EntityType Name="TBL_TICKET_SEGUIMIENTO">
+          <Key>
+            <PropertyRef Name="PK_TICKET_SEGUIMIENTO" />
+          </Key>
+          <Property Name="PK_TICKET_SEGUIMIENTO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_TICKET" Type="Int32" Nullable="false" />
+          <Property Name="VC_CONTENIDO" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="FK_USUARIO_REGISTRA" Type="Int32" Nullable="false" />
+          <Property Name="DT_FECHA_EVENTO" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="TBL_TICKET" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_SEGUIMIENTO_TBL_TICKET" FromRole="TBL_TICKET_SEGUIMIENTO" ToRole="TBL_TICKET" />
+          <NavigationProperty Name="TBL_USUARIO" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_SEGUIMIENTO_TBL_USUARIO" FromRole="TBL_TICKET_SEGUIMIENTO" ToRole="TBL_USUARIO" />
+        </EntityType>
+        <EntityType Name="TBL_UNIDAD">
+          <Key>
+            <PropertyRef Name="PK_UNIDAD" />
+          </Key>
+          <Property Name="PK_UNIDAD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VC_CODIGO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VC_DESCRIPCION" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="VC_PREFIJO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="I_NUMERO" Type="Int32" />
+          <Property Name="I_ANNO" Type="Int32" />
+          <NavigationProperty Name="TBL_TICKET" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_TBL_UNIDAD" FromRole="TBL_UNIDAD" ToRole="TBL_TICKET" />
+          <NavigationProperty Name="TBL_USUARIO" Relationship="INAMU_SOPORTEModel.FK_TBLUSUARIO_TBLUNIDAD" FromRole="TBL_UNIDAD" ToRole="TBL_USUARIO" />
+        </EntityType>
+        <EntityType Name="TBL_USUARIO">
+          <Key>
+            <PropertyRef Name="PK_USUARIO" />
+          </Key>
+          <Property Name="PK_USUARIO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VC_USUARIO" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DT_FECHAREGISTRO" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FK_UNIDAD" Type="Int32" Nullable="false" />
+          <Property Name="VC_NOMBRE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VC_APELLIDO1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VC_APELLIDO2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IM_CLAVE" Type="Binary" Nullable="false" MaxLength="1000" FixedLength="false" />
+          <Property Name="IM_SALT1" Type="Binary" Nullable="false" MaxLength="100" FixedLength="false" />
+          <Property Name="IM_SALT2" Type="Binary" Nullable="false" MaxLength="100" FixedLength="false" />
+          <Property Name="B_EXTERNO" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="TBL_ROLUSUARIO" Relationship="INAMU_SOPORTEModel.FK_TBLROLUSUARIO_TBLUSUARIO" FromRole="TBL_USUARIO" ToRole="TBL_ROLUSUARIO" />
+          <NavigationProperty Name="TBL_TICKET" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_TBL_USUARIO" FromRole="TBL_USUARIO" ToRole="TBL_TICKET" />
+          <NavigationProperty Name="TBL_TICKET1" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_TBL_USUARIO1" FromRole="TBL_USUARIO" ToRole="TBL_TICKET" />
+          <NavigationProperty Name="TBL_TICKET_SEGUIMIENTO" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_SEGUIMIENTO_TBL_USUARIO" FromRole="TBL_USUARIO" ToRole="TBL_TICKET_SEGUIMIENTO" />
+          <NavigationProperty Name="TBL_UNIDAD" Relationship="INAMU_SOPORTEModel.FK_TBLUSUARIO_TBLUNIDAD" FromRole="TBL_USUARIO" ToRole="TBL_UNIDAD" />
+          <NavigationProperty Name="TBL_TICKET_ASIGNACION" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_ASIGNACION_TBL_USUARIO" FromRole="TBL_USUARIO" ToRole="TBL_TICKET_ASIGNACION" />
+          <NavigationProperty Name="TBL_TICKET_ASIGNACION1" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_ESCALAMIENTO_CAT_NIVEL_ESCALAMIENTO1" FromRole="TBL_USUARIO" ToRole="TBL_TICKET_ASIGNACION" />
+          <NavigationProperty Name="TBL_USUARIO_EQUIPO" Relationship="INAMU_SOPORTEModel.FK_TBL_USUARIO_EQUIPO_TBL_USUARIO" FromRole="TBL_USUARIO" ToRole="TBL_USUARIO_EQUIPO" />
+        </EntityType>
+        <EntityType Name="TBL_USUARIO_EQUIPO">
+          <Key>
+            <PropertyRef Name="PK_EQUIPO_USUARIO" />
+          </Key>
+          <Property Name="PK_EQUIPO_USUARIO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_USUARIO" Type="Int32" Nullable="false" />
+          <Property Name="FK_EQUIPO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TBL_EQUIPO" Relationship="INAMU_SOPORTEModel.FK_TBL_USUARIO_EQUIPO_TBL_EQUIPO" FromRole="TBL_USUARIO_EQUIPO" ToRole="TBL_EQUIPO" />
+          <NavigationProperty Name="TBL_USUARIO" Relationship="INAMU_SOPORTEModel.FK_TBL_USUARIO_EQUIPO_TBL_USUARIO" FromRole="TBL_USUARIO_EQUIPO" ToRole="TBL_USUARIO" />
+        </EntityType>
+        <EntityType Name="TBL_VALORCATALOGO">
+          <Key>
+            <PropertyRef Name="PK_VALORCATALOGO" />
+          </Key>
+          <Property Name="PK_VALORCATALOGO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_CATALOGO" Type="Int32" Nullable="false" />
+          <Property Name="VC_VALOR1" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="VC_VALOR2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TBL_BITACORA" Relationship="INAMU_SOPORTEModel.FK_TBLBITACORA_TBLVALORCATALOGO" FromRole="TBL_VALORCATALOGO" ToRole="TBL_BITACORA" />
+          <NavigationProperty Name="TBL_CATALOGO" Relationship="INAMU_SOPORTEModel.FK_TBLVALORCATALOGO_TBLCATALOGO" FromRole="TBL_VALORCATALOGO" ToRole="TBL_CATALOGO" />
+          <NavigationProperty Name="TBL_EQUIPO" Relationship="INAMU_SOPORTEModel.FK_TBL_EQUIPO_TBL_VALORCATALOGO" FromRole="TBL_VALORCATALOGO" ToRole="TBL_EQUIPO" />
+          <NavigationProperty Name="TBL_TICKET" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_TBL_VALORCATALOGO" FromRole="TBL_VALORCATALOGO" ToRole="TBL_TICKET" />
+          <NavigationProperty Name="TBL_TICKET1" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_TBL_VALORCATALOGO1" FromRole="TBL_VALORCATALOGO" ToRole="TBL_TICKET" />
+          <NavigationProperty Name="TBL_TICKET_ARCHIVO" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_ARCHIVO_TBL_VALORCATALOGO" FromRole="TBL_VALORCATALOGO" ToRole="TBL_TICKET_ARCHIVO" />
+          <NavigationProperty Name="TBL_TICKET_ASIGNACION" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_ESCALAMIENTO_TBL_VALORCATALOGO" FromRole="TBL_VALORCATALOGO" ToRole="TBL_TICKET_ASIGNACION" />
+        </EntityType>
+        <EntityType Name="TBL_TICKET_ASIGNACION">
+          <Key>
+            <PropertyRef Name="FK_TICKET" />
+            <PropertyRef Name="FK_USUARIO_SOLICITA" />
+            <PropertyRef Name="FK_USUARIO" />
+            <PropertyRef Name="FK_ESTADO_ASIGNACION" />
+            <PropertyRef Name="DT_FECHA_SOLICITUD" />
+          </Key>
+          <Property Name="FK_TICKET" Type="Int32" Nullable="false" />
+          <Property Name="FK_USUARIO_SOLICITA" Type="Int32" Nullable="false" />
+          <Property Name="FK_USUARIO" Type="Int32" Nullable="false" />
+          <Property Name="VC_COMENTARIOS" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FK_ESTADO_ASIGNACION" Type="Int32" Nullable="false" />
+          <Property Name="DT_FECHA_SOLICITUD" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="TBL_TICKET" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_ASIGNACION_TBL_TICKET" FromRole="TBL_TICKET_ASIGNACION" ToRole="TBL_TICKET" />
+          <NavigationProperty Name="TBL_USUARIO" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_ASIGNACION_TBL_USUARIO" FromRole="TBL_TICKET_ASIGNACION" ToRole="TBL_USUARIO" />
+          <NavigationProperty Name="TBL_USUARIO1" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_ESCALAMIENTO_CAT_NIVEL_ESCALAMIENTO1" FromRole="TBL_TICKET_ASIGNACION" ToRole="TBL_USUARIO" />
+          <NavigationProperty Name="TBL_VALORCATALOGO" Relationship="INAMU_SOPORTEModel.FK_TBL_TICKET_ESCALAMIENTO_TBL_VALORCATALOGO" FromRole="TBL_TICKET_ASIGNACION" ToRole="TBL_VALORCATALOGO" />
+        </EntityType>
+        <Association Name="FK_TBL_ROL_CAT_NIVEL_ESCALAMIENTO">
+          <End Type="INAMU_SOPORTEModel.CAT_NIVEL_ESCALAMIENTO" Role="CAT_NIVEL_ESCALAMIENTO" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_ROL" Role="TBL_ROL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_NIVEL_ESCALAMIENTO">
+              <PropertyRef Name="PK_NIVEL_ESCALAMIENTO" />
+            </Principal>
+            <Dependent Role="TBL_ROL">
+              <PropertyRef Name="FK_NIVEL_ESCALAMIENTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLROLACCION_TBLACCION">
+          <End Type="INAMU_SOPORTEModel.TBL_ACCION" Role="TBL_ACCION" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_ROLACCION" Role="TBL_ROLACCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_ACCION">
+              <PropertyRef Name="PK_ACCION" />
+            </Principal>
+            <Dependent Role="TBL_ROLACCION">
+              <PropertyRef Name="FK_ACCION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLBITACORA_TBLVALORCATALOGO">
+          <End Type="INAMU_SOPORTEModel.TBL_VALORCATALOGO" Role="TBL_VALORCATALOGO" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_BITACORA" Role="TBL_BITACORA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_VALORCATALOGO">
+              <PropertyRef Name="PK_VALORCATALOGO" />
+            </Principal>
+            <Dependent Role="TBL_BITACORA">
+              <PropertyRef Name="FK_TIPOEVENTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLVALORCATALOGO_TBLCATALOGO">
+          <End Type="INAMU_SOPORTEModel.TBL_CATALOGO" Role="TBL_CATALOGO" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_VALORCATALOGO" Role="TBL_VALORCATALOGO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_CATALOGO">
+              <PropertyRef Name="PK_CATALOGO" />
+            </Principal>
+            <Dependent Role="TBL_VALORCATALOGO">
+              <PropertyRef Name="FK_CATALOGO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_EQUIPO_TBL_VALORCATALOGO">
+          <End Type="INAMU_SOPORTEModel.TBL_VALORCATALOGO" Role="TBL_VALORCATALOGO" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_EQUIPO" Role="TBL_EQUIPO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_VALORCATALOGO">
+              <PropertyRef Name="PK_VALORCATALOGO" />
+            </Principal>
+            <Dependent Role="TBL_EQUIPO">
+              <PropertyRef Name="FK_TIPO_EQUIPO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_EQUIPO_TBL_EQUIPO">
+          <End Type="INAMU_SOPORTEModel.TBL_EQUIPO" Role="TBL_EQUIPO" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_TICKET_EQUIPO" Role="TBL_TICKET_EQUIPO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_EQUIPO">
+              <PropertyRef Name="PK_EQUIPO" />
+            </Principal>
+            <Dependent Role="TBL_TICKET_EQUIPO">
+              <PropertyRef Name="FK_EQUIPO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_USUARIO_EQUIPO_TBL_EQUIPO">
+          <End Type="INAMU_SOPORTEModel.TBL_EQUIPO" Role="TBL_EQUIPO" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_USUARIO_EQUIPO" Role="TBL_USUARIO_EQUIPO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_EQUIPO">
+              <PropertyRef Name="PK_EQUIPO" />
+            </Principal>
+            <Dependent Role="TBL_USUARIO_EQUIPO">
+              <PropertyRef Name="FK_EQUIPO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLROLACCION_TBLROL">
+          <End Type="INAMU_SOPORTEModel.TBL_ROL" Role="TBL_ROL" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_ROLACCION" Role="TBL_ROLACCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_ROL">
+              <PropertyRef Name="PK_ROL" />
+            </Principal>
+            <Dependent Role="TBL_ROLACCION">
+              <PropertyRef Name="FK_ROL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLROLUSUARIO_TBLROL">
+          <End Type="INAMU_SOPORTEModel.TBL_ROL" Role="TBL_ROL" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_ROLUSUARIO" Role="TBL_ROLUSUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_ROL">
+              <PropertyRef Name="PK_ROL" />
+            </Principal>
+            <Dependent Role="TBL_ROLUSUARIO">
+              <PropertyRef Name="FK_ROL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLROLUSUARIO_TBLUSUARIO">
+          <End Type="INAMU_SOPORTEModel.TBL_USUARIO" Role="TBL_USUARIO" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_ROLUSUARIO" Role="TBL_ROLUSUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_USUARIO">
+              <PropertyRef Name="PK_USUARIO" />
+            </Principal>
+            <Dependent Role="TBL_ROLUSUARIO">
+              <PropertyRef Name="FK_USUARIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_ARCHIVO_TBL_TICKET">
+          <End Type="INAMU_SOPORTEModel.TBL_TICKET" Role="TBL_TICKET" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_TICKET_ARCHIVO" Role="TBL_TICKET_ARCHIVO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_TICKET">
+              <PropertyRef Name="PK_TICKET" />
+            </Principal>
+            <Dependent Role="TBL_TICKET_ARCHIVO">
+              <PropertyRef Name="FK_TICKET" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_ASIGNACION_TBL_TICKET">
+          <End Type="INAMU_SOPORTEModel.TBL_TICKET" Role="TBL_TICKET" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_TICKET_ASIGNACION" Role="TBL_TICKET_ASIGNACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_TICKET">
+              <PropertyRef Name="PK_TICKET" />
+            </Principal>
+            <Dependent Role="TBL_TICKET_ASIGNACION">
+              <PropertyRef Name="FK_TICKET" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_EQUIPO_TBL_TICKET">
+          <End Type="INAMU_SOPORTEModel.TBL_TICKET" Role="TBL_TICKET" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_TICKET_EQUIPO" Role="TBL_TICKET_EQUIPO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_TICKET">
+              <PropertyRef Name="PK_TICKET" />
+            </Principal>
+            <Dependent Role="TBL_TICKET_EQUIPO">
+              <PropertyRef Name="FK_TICKET" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_SEGUIMIENTO_TBL_TICKET">
+          <End Type="INAMU_SOPORTEModel.TBL_TICKET" Role="TBL_TICKET" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_TICKET_SEGUIMIENTO" Role="TBL_TICKET_SEGUIMIENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_TICKET">
+              <PropertyRef Name="PK_TICKET" />
+            </Principal>
+            <Dependent Role="TBL_TICKET_SEGUIMIENTO">
+              <PropertyRef Name="FK_TICKET" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_TBL_UNIDAD">
+          <End Type="INAMU_SOPORTEModel.TBL_UNIDAD" Role="TBL_UNIDAD" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_TICKET" Role="TBL_TICKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_UNIDAD">
+              <PropertyRef Name="PK_UNIDAD" />
+            </Principal>
+            <Dependent Role="TBL_TICKET">
+              <PropertyRef Name="FK_UNIDAD_SOLICITA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_TBL_USUARIO">
+          <End Type="INAMU_SOPORTEModel.TBL_USUARIO" Role="TBL_USUARIO" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_TICKET" Role="TBL_TICKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_USUARIO">
+              <PropertyRef Name="PK_USUARIO" />
+            </Principal>
+            <Dependent Role="TBL_TICKET">
+              <PropertyRef Name="FK_USUARIO_SOLICITA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_TBL_USUARIO1">
+          <End Type="INAMU_SOPORTEModel.TBL_USUARIO" Role="TBL_USUARIO" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_TICKET" Role="TBL_TICKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_USUARIO">
+              <PropertyRef Name="PK_USUARIO" />
+            </Principal>
+            <Dependent Role="TBL_TICKET">
+              <PropertyRef Name="FK_USUARIO_ASIGNADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_TBL_VALORCATALOGO">
+          <End Type="INAMU_SOPORTEModel.TBL_VALORCATALOGO" Role="TBL_VALORCATALOGO" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_TICKET" Role="TBL_TICKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_VALORCATALOGO">
+              <PropertyRef Name="PK_VALORCATALOGO" />
+            </Principal>
+            <Dependent Role="TBL_TICKET">
+              <PropertyRef Name="FK_URGENCIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_TBL_VALORCATALOGO1">
+          <End Type="INAMU_SOPORTEModel.TBL_VALORCATALOGO" Role="TBL_VALORCATALOGO" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_TICKET" Role="TBL_TICKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_VALORCATALOGO">
+              <PropertyRef Name="PK_VALORCATALOGO" />
+            </Principal>
+            <Dependent Role="TBL_TICKET">
+              <PropertyRef Name="FK_ESTADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_ARCHIVO_TBL_VALORCATALOGO">
+          <End Type="INAMU_SOPORTEModel.TBL_VALORCATALOGO" Role="TBL_VALORCATALOGO" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_TICKET_ARCHIVO" Role="TBL_TICKET_ARCHIVO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_VALORCATALOGO">
+              <PropertyRef Name="PK_VALORCATALOGO" />
+            </Principal>
+            <Dependent Role="TBL_TICKET_ARCHIVO">
+              <PropertyRef Name="FK_TIPO_ARCHIVO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_SEGUIMIENTO_TBL_USUARIO">
+          <End Type="INAMU_SOPORTEModel.TBL_USUARIO" Role="TBL_USUARIO" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_TICKET_SEGUIMIENTO" Role="TBL_TICKET_SEGUIMIENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_USUARIO">
+              <PropertyRef Name="PK_USUARIO" />
+            </Principal>
+            <Dependent Role="TBL_TICKET_SEGUIMIENTO">
+              <PropertyRef Name="FK_USUARIO_REGISTRA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLUSUARIO_TBLUNIDAD">
+          <End Type="INAMU_SOPORTEModel.TBL_UNIDAD" Role="TBL_UNIDAD" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_USUARIO" Role="TBL_USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_UNIDAD">
+              <PropertyRef Name="PK_UNIDAD" />
+            </Principal>
+            <Dependent Role="TBL_USUARIO">
+              <PropertyRef Name="FK_UNIDAD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_ASIGNACION_TBL_USUARIO">
+          <End Type="INAMU_SOPORTEModel.TBL_USUARIO" Role="TBL_USUARIO" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_TICKET_ASIGNACION" Role="TBL_TICKET_ASIGNACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_USUARIO">
+              <PropertyRef Name="PK_USUARIO" />
+            </Principal>
+            <Dependent Role="TBL_TICKET_ASIGNACION">
+              <PropertyRef Name="FK_USUARIO_SOLICITA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_ESCALAMIENTO_CAT_NIVEL_ESCALAMIENTO1">
+          <End Type="INAMU_SOPORTEModel.TBL_USUARIO" Role="TBL_USUARIO" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_TICKET_ASIGNACION" Role="TBL_TICKET_ASIGNACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_USUARIO">
+              <PropertyRef Name="PK_USUARIO" />
+            </Principal>
+            <Dependent Role="TBL_TICKET_ASIGNACION">
+              <PropertyRef Name="FK_USUARIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_USUARIO_EQUIPO_TBL_USUARIO">
+          <End Type="INAMU_SOPORTEModel.TBL_USUARIO" Role="TBL_USUARIO" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_USUARIO_EQUIPO" Role="TBL_USUARIO_EQUIPO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_USUARIO">
+              <PropertyRef Name="PK_USUARIO" />
+            </Principal>
+            <Dependent Role="TBL_USUARIO_EQUIPO">
+              <PropertyRef Name="FK_USUARIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_TICKET_ESCALAMIENTO_TBL_VALORCATALOGO">
+          <End Type="INAMU_SOPORTEModel.TBL_VALORCATALOGO" Role="TBL_VALORCATALOGO" Multiplicity="1" />
+          <End Type="INAMU_SOPORTEModel.TBL_TICKET_ASIGNACION" Role="TBL_TICKET_ASIGNACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_VALORCATALOGO">
+              <PropertyRef Name="PK_VALORCATALOGO" />
+            </Principal>
+            <Dependent Role="TBL_TICKET_ASIGNACION">
+              <PropertyRef Name="FK_ESTADO_ASIGNACION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="INAMU_SOPORTEModelStoreContainer" CdmEntityContainer="INAMU_SOPORTEEntities">
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="INAMU_SOPORTEModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="INAMU_SOPORTEModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="INAMU_SOPORTEModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="INAMU_SOPORTEModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="INAMU_SOPORTEModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="INAMU_SOPORTEModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="INAMU_SOPORTEModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="INAMU_SOPORTEModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="INAMU_SOPORTEModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="CAT_NIVEL_ESCALAMIENTO">
+            <EntityTypeMapping TypeName="INAMU_SOPORTEModel.CAT_NIVEL_ESCALAMIENTO">
+              <MappingFragment StoreEntitySet="CAT_NIVEL_ESCALAMIENTO">
+                <ScalarProperty Name="I_ORDEN" ColumnName="I_ORDEN" />
+                <ScalarProperty Name="VC_DESCRIPCION" ColumnName="VC_DESCRIPCION" />
+                <ScalarProperty Name="VC_NOMBRE" ColumnName="VC_NOMBRE" />
+                <ScalarProperty Name="PK_NIVEL_ESCALAMIENTO" ColumnName="PK_NIVEL_ESCALAMIENTO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_ACCION">
+            <EntityTypeMapping TypeName="INAMU_SOPORTEModel.TBL_ACCION">
+              <MappingFragment StoreEntitySet="TBL_ACCION">
+                <ScalarProperty Name="VC_DESCRIPCION" ColumnName="VC_DESCRIPCION" />
+                <ScalarProperty Name="VC_ACCION" ColumnName="VC_ACCION" />
+                <ScalarProperty Name="VC_CONTROLADOR" ColumnName="VC_CONTROLADOR" />
+                <ScalarProperty Name="PK_ACCION" ColumnName="PK_ACCION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_BITACORA">
+            <EntityTypeMapping TypeName="INAMU_SOPORTEModel.TBL_BITACORA">
+              <MappingFragment StoreEntitySet="TBL_BITACORA">
+                <ScalarProperty Name="VC_DIRECCIONIP" ColumnName="VC_DIRECCIONIP" />
+                <ScalarProperty Name="VC_DETALLE" ColumnName="VC_DETALLE" />
+                <ScalarProperty Name="FK_USUARIO" ColumnName="FK_USUARIO" />
+                <ScalarProperty Name="FK_TIPOEVENTO" ColumnName="FK_TIPOEVENTO" />
+                <ScalarProperty Name="DT_FECHAEVENTO" ColumnName="DT_FECHAEVENTO" />
+                <ScalarProperty Name="PK_BITACORA" ColumnName="PK_BITACORA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_CATALOGO">
+            <EntityTypeMapping TypeName="INAMU_SOPORTEModel.TBL_CATALOGO">
+              <MappingFragment StoreEntitySet="TBL_CATALOGO">
+                <ScalarProperty Name="FK_CATALOGOPADRE" ColumnName="FK_CATALOGOPADRE" />
+                <ScalarProperty Name="VC_NOMBRECATALOGO" ColumnName="VC_NOMBRECATALOGO" />
+                <ScalarProperty Name="PK_CATALOGO" ColumnName="PK_CATALOGO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_EQUIPO">
+            <EntityTypeMapping TypeName="INAMU_SOPORTEModel.TBL_EQUIPO">
+              <MappingFragment StoreEntitySet="TBL_EQUIPO">
+                <ScalarProperty Name="B_ACTIVO" ColumnName="B_ACTIVO" />
+                <ScalarProperty Name="VC_NUMERO_SERIE" ColumnName="VC_NUMERO_SERIE" />
+                <ScalarProperty Name="VC_PLACA" ColumnName="VC_PLACA" />
+                <ScalarProperty Name="VC_DESCRIPCION" ColumnName="VC_DESCRIPCION" />
+                <ScalarProperty Name="VC_NOMBRE" ColumnName="VC_NOMBRE" />
+                <ScalarProperty Name="FK_TIPO_EQUIPO" ColumnName="FK_TIPO_EQUIPO" />
+                <ScalarProperty Name="PK_EQUIPO" ColumnName="PK_EQUIPO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_ROL">
+            <EntityTypeMapping TypeName="INAMU_SOPORTEModel.TBL_ROL">
+              <MappingFragment StoreEntitySet="TBL_ROL">
+                <ScalarProperty Name="FK_NIVEL_ESCALAMIENTO" ColumnName="FK_NIVEL_ESCALAMIENTO" />
+                <ScalarProperty Name="VC_DESCRIPCION" ColumnName="VC_DESCRIPCION" />
+                <ScalarProperty Name="VC_NOMBRE" ColumnName="VC_NOMBRE" />
+                <ScalarProperty Name="PK_ROL" ColumnName="PK_ROL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_ROLACCION">
+            <EntityTypeMapping TypeName="INAMU_SOPORTEModel.TBL_ROLACCION">
+              <MappingFragment StoreEntitySet="TBL_ROLACCION">
+                <ScalarProperty Name="FK_ACCION" ColumnName="FK_ACCION" />
+                <ScalarProperty Name="FK_ROL" ColumnName="FK_ROL" />
+                <ScalarProperty Name="PK_ROLACCION" ColumnName="PK_ROLACCION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_ROLUSUARIO">
+            <EntityTypeMapping TypeName="INAMU_SOPORTEModel.TBL_ROLUSUARIO">
+              <MappingFragment StoreEntitySet="TBL_ROLUSUARIO">
+                <ScalarProperty Name="FK_ROL" ColumnName="FK_ROL" />
+                <ScalarProperty Name="FK_USUARIO" ColumnName="FK_USUARIO" />
+                <ScalarProperty Name="PK_ROLUSUARIO" ColumnName="PK_ROLUSUARIO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_TICKET">
+            <EntityTypeMapping TypeName="INAMU_SOPORTEModel.TBL_TICKET">
+              <MappingFragment StoreEntitySet="TBL_TICKET">
+                <ScalarProperty Name="VC_PLACA_EQUIPO" ColumnName="VC_PLACA_EQUIPO" />
+                <ScalarProperty Name="FK_TIPO_PROBLEMA" ColumnName="FK_TIPO_PROBLEMA" />
+                <ScalarProperty Name="FK_USUARIO_ASIGNADO" ColumnName="FK_USUARIO_ASIGNADO" />
+                <ScalarProperty Name="FK_ESTADO" ColumnName="FK_ESTADO" />
+                <ScalarProperty Name="VC_DESCRIPCION" ColumnName="VC_DESCRIPCION" />
+                <ScalarProperty Name="FK_UNIDAD_SOLICITA" ColumnName="FK_UNIDAD_SOLICITA" />
+                <ScalarProperty Name="FK_URGENCIA" ColumnName="FK_URGENCIA" />
+                <ScalarProperty Name="DT_FECHA_CREACION" ColumnName="DT_FECHA_CREACION" />
+                <ScalarProperty Name="FK_USUARIO_SOLICITA" ColumnName="FK_USUARIO_SOLICITA" />
+                <ScalarProperty Name="PK_TICKET" ColumnName="PK_TICKET" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_TICKET_ARCHIVO">
+            <EntityTypeMapping TypeName="INAMU_SOPORTEModel.TBL_TICKET_ARCHIVO">
+              <MappingFragment StoreEntitySet="TBL_TICKET_ARCHIVO">
+                <ScalarProperty Name="FK_TIPO_ARCHIVO" ColumnName="FK_TIPO_ARCHIVO" />
+                <ScalarProperty Name="VC_URL_ARCHIVO" ColumnName="VC_URL_ARCHIVO" />
+                <ScalarProperty Name="FK_TICKET" ColumnName="FK_TICKET" />
+                <ScalarProperty Name="PK_TICKET_ARCHIVO" ColumnName="PK_TICKET_ARCHIVO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_TICKET_EQUIPO">
+            <EntityTypeMapping TypeName="INAMU_SOPORTEModel.TBL_TICKET_EQUIPO">
+              <MappingFragment StoreEntitySet="TBL_TICKET_EQUIPO">
+                <ScalarProperty Name="FK_EQUIPO" ColumnName="FK_EQUIPO" />
+                <ScalarProperty Name="FK_TICKET" ColumnName="FK_TICKET" />
+                <ScalarProperty Name="PK_TICKET_EQUIPO" ColumnName="PK_TICKET_EQUIPO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_TICKET_SEGUIMIENTO">
+            <EntityTypeMapping TypeName="INAMU_SOPORTEModel.TBL_TICKET_SEGUIMIENTO">
+              <MappingFragment StoreEntitySet="TBL_TICKET_SEGUIMIENTO">
+                <ScalarProperty Name="DT_FECHA_EVENTO" ColumnName="DT_FECHA_EVENTO" />
+                <ScalarProperty Name="FK_USUARIO_REGISTRA" ColumnName="FK_USUARIO_REGISTRA" />
+                <ScalarProperty Name="VC_CONTENIDO" ColumnName="VC_CONTENIDO" />
+                <ScalarProperty Name="FK_TICKET" ColumnName="FK_TICKET" />
+                <ScalarProperty Name="PK_TICKET_SEGUIMIENTO" ColumnName="PK_TICKET_SEGUIMIENTO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_UNIDAD">
+            <EntityTypeMapping TypeName="INAMU_SOPORTEModel.TBL_UNIDAD">
+              <MappingFragment StoreEntitySet="TBL_UNIDAD">
+                <ScalarProperty Name="I_ANNO" ColumnName="I_ANNO" />
+                <ScalarProperty Name="I_NUMERO" ColumnName="I_NUMERO" />
+                <ScalarProperty Name="VC_PREFIJO" ColumnName="VC_PREFIJO" />
+                <ScalarProperty Name="VC_DESCRIPCION" ColumnName="VC_DESCRIPCION" />
+                <ScalarProperty Name="VC_CODIGO" ColumnName="VC_CODIGO" />
+                <ScalarProperty Name="PK_UNIDAD" ColumnName="PK_UNIDAD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_USUARIO">
+            <EntityTypeMapping TypeName="INAMU_SOPORTEModel.TBL_USUARIO">
+              <MappingFragment StoreEntitySet="TBL_USUARIO">
+                <ScalarProperty Name="B_EXTERNO" ColumnName="B_EXTERNO" />
+                <ScalarProperty Name="IM_SALT2" ColumnName="IM_SALT2" />
+                <ScalarProperty Name="IM_SALT1" ColumnName="IM_SALT1" />
+                <ScalarProperty Name="IM_CLAVE" ColumnName="IM_CLAVE" />
+                <ScalarProperty Name="VC_APELLIDO2" ColumnName="VC_APELLIDO2" />
+                <ScalarProperty Name="VC_APELLIDO1" ColumnName="VC_APELLIDO1" />
+                <ScalarProperty Name="VC_NOMBRE" ColumnName="VC_NOMBRE" />
+                <ScalarProperty Name="FK_UNIDAD" ColumnName="FK_UNIDAD" />
+                <ScalarProperty Name="DT_FECHAREGISTRO" ColumnName="DT_FECHAREGISTRO" />
+                <ScalarProperty Name="VC_USUARIO" ColumnName="VC_USUARIO" />
+                <ScalarProperty Name="PK_USUARIO" ColumnName="PK_USUARIO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_USUARIO_EQUIPO">
+            <EntityTypeMapping TypeName="INAMU_SOPORTEModel.TBL_USUARIO_EQUIPO">
+              <MappingFragment StoreEntitySet="TBL_USUARIO_EQUIPO">
+                <ScalarProperty Name="FK_EQUIPO" ColumnName="FK_EQUIPO" />
+                <ScalarProperty Name="FK_USUARIO" ColumnName="FK_USUARIO" />
+                <ScalarProperty Name="PK_EQUIPO_USUARIO" ColumnName="PK_EQUIPO_USUARIO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_VALORCATALOGO">
+            <EntityTypeMapping TypeName="INAMU_SOPORTEModel.TBL_VALORCATALOGO">
+              <MappingFragment StoreEntitySet="TBL_VALORCATALOGO">
+                <ScalarProperty Name="VC_VALOR2" ColumnName="VC_VALOR2" />
+                <ScalarProperty Name="VC_VALOR1" ColumnName="VC_VALOR1" />
+                <ScalarProperty Name="FK_CATALOGO" ColumnName="FK_CATALOGO" />
+                <ScalarProperty Name="PK_VALORCATALOGO" ColumnName="PK_VALORCATALOGO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_TICKET_ASIGNACION">
+            <EntityTypeMapping TypeName="INAMU_SOPORTEModel.TBL_TICKET_ASIGNACION">
+              <MappingFragment StoreEntitySet="TBL_TICKET_ASIGNACION">
+                <ScalarProperty Name="DT_FECHA_SOLICITUD" ColumnName="DT_FECHA_SOLICITUD" />
+                <ScalarProperty Name="FK_ESTADO_ASIGNACION" ColumnName="FK_ESTADO_ASIGNACION" />
+                <ScalarProperty Name="VC_COMENTARIOS" ColumnName="VC_COMENTARIOS" />
+                <ScalarProperty Name="FK_USUARIO" ColumnName="FK_USUARIO" />
+                <ScalarProperty Name="FK_USUARIO_SOLICITA" ColumnName="FK_USUARIO_SOLICITA" />
+                <ScalarProperty Name="FK_TICKET" ColumnName="FK_TICKET" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

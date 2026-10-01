@@ -1,0 +1,592 @@
+﻿
+@{
+    ViewBag.Title = "Principal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Static navbar -->
+<style>
+    .cerrar {
+        width: 100%;
+        margin-bottom: 3px;
+        color: white;
+        background: red;
+        border: red;
+    }
+</style>
+<script type="text/javascript">
+
+
+    $(document).ready(function() {
+        $("#contenedorEsperaIndicadores").hide();
+        document.title = "Mesa de Ayuda";
+        debugger;
+        $("#contenedorEspera").hide();
+
+
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("RetornarCatalogos", "Catalogos")',
+            async: true,
+            success: function(data) {
+
+                localStorage.setItem('catalogos', JSON.stringify(data));
+
+
+            },
+            error: function(xhr, ajaxOptions, error) {
+                $("#txtModalTitulo").css("color", "red");
+                $("#txtModalTitulo").text("Error de Sistema");
+                $("#txtModalContenido").text("Fallo al cargar catálogos, contacte a la persona administradora de SIPAMU");
+                instMensajes.open();
+
+            }
+        });
+
+
+        var instMensajes = $('[data-remodal-id=modalDialogo]').remodal();
+
+        $('#btnCerrarSesion').click(function() {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Index")',
+                processData: true,
+                success: function(data) {
+
+                    window.location.href = '@Url.Action("Ingreso", "Home")';
+                },
+                error: function(xhr, ajaxOptions, error) {
+                    $("#txtModalTitulo").css("color", "red");
+                    $("#txtModalTitulo").text("Error de Sistema");
+                    $("#txtModalContenido").text("Fallo al cerrar sesión, contacte a la persona administradora de SIPAMU");
+                    instMensajes.open();
+
+                }
+            });
+        });
+
+        $('#btnInicio').click(function () {
+            window.location.href = '@Url.Action("Index", "Home")';
+        });
+
+
+        $('#btnInstrumentoA').click(function() {
+            $('#contendorFrames').hide();
+            $("#contenedorEspera").show();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("FrmInstrumentoA", "Ficha")',
+                async: true
+            }).done(function(data) {
+
+
+                $('#contendorFrames').html(data);
+                $("#contenedorEspera").hide();
+                $('#contendorFrames').fadeIn();
+
+
+            }).fail(function(exception) {
+                $("#txtModalTitulo").css("color", "red");
+                $("#txtModalTitulo").text("Error de Sistema");
+                $("#txtModalContenido").text("Fallo al cargar la pantalla, contacte a la persona administradora de SIPAMU");
+                $("#contenedorEspera").hide();
+                instMensajes.open();
+            });
+        });
+
+        $('#btnInstrumentoB').click(function () {
+            debugger;
+            $('#contendorFrames').hide();
+            $("#contenedorEspera").show();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GridInstrumentoB", "Ficha")',
+                async: true
+            }).done(function(data) {
+
+
+                $('#contendorFrames').html(data);
+                $("#contenedorEspera").hide();
+                $('#contendorFrames').fadeIn();
+
+
+            }).fail(function(exception) {
+                $("#txtModalTitulo").css("color", "red");
+                $("#txtModalTitulo").text("Error de Sistema");
+                $("#txtModalContenido").text("Fallo al cargar la pantalla, contacte a la persona administradora de SIPAMU");
+                $("#contenedorEspera").hide();
+                instMensajes.open();
+            });
+        });
+
+        $('#btnPlanVida').click(function () {
+            $('#contendorFrames').hide();
+            $("#contenedorEspera").show();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GridPlanVida", "Ficha")',
+                async: true
+            }).done(function (data) {
+
+
+                $('#contendorFrames').html(data);
+                $("#contenedorEspera").hide();
+                $('#contendorFrames').fadeIn();
+
+
+            }).fail(function (exception) {
+                $("#txtModalTitulo").css("color", "red");
+                $("#txtModalTitulo").text("Error de Sistema");
+                $("#txtModalContenido").text("Fallo al cargar la pantalla, contacte a la persona administradora de SIPAMU");
+                $("#contenedorEspera").hide();
+                instMensajes.open();
+            });
+        });
+
+        $('#btnEdicion').click(function () {
+            debugger;
+            $('#contendorFrames').hide();
+            $("#contenedorEspera").show();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GridEdicionFicha", "Ficha")',
+                async: true
+            }).done(function (data) {
+
+
+                $('#contendorFrames').html(data);
+                $("#contenedorEspera").hide();
+                $('#contendorFrames').fadeIn();
+
+
+            }).fail(function (exception) {
+                $("#txtModalTitulo").css("color", "red");
+                $("#txtModalTitulo").text("Error de Sistema");
+                $("#txtModalContenido").text("Fallo al cargar la pantalla, contacte a la persona administradora de SIPAMU");
+                $("#contenedorEspera").hide();
+                instMensajes.open();
+            });
+        });
+        ////////////////////////////////////////////////////////jose angel
+        $('#btnUsuarios').click(function () {
+            debugger;
+            $('#contendorFrames').hide();
+            $("#contenedorEspera").show();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GridUsuarios", "Seguridad")',
+                async: true
+            }).done(function (data) {
+
+
+                $('#contendorFrames').html(data);
+                $("#contenedorEspera").hide();
+                $('#contendorFrames').fadeIn();
+
+
+            }).fail(function (exception) {
+                $("#txtModalTitulo").css("color", "red");
+                $("#txtModalTitulo").text("Error de Sistema");
+                $("#txtModalContenido").text("Fallo al cargar la pantalla, contacte a la persona administradora de SIPAMU");
+                $("#contenedorEspera").hide();
+                instMensajes.open();
+            });
+        });
+
+        $('#btnRoles').click(function () {
+            debugger;
+            $('#contendorFrames').hide();
+            $("#contenedorEspera").show();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GridRoles", "Seguridad")',
+                async: true
+            }).done(function (data) {
+
+
+                $('#contendorFrames').html(data);
+                $("#contenedorEspera").hide();
+                $('#contendorFrames').fadeIn();
+
+
+            }).fail(function (exception) {
+                $("#txtModalTitulo").css("color", "red");
+                $("#txtModalTitulo").text("Error de Sistema");
+                $("#txtModalContenido").text("Fallo al cargar la pantalla, contacte a la persona administradora de SIPAMU");
+                $("#contenedorEspera").hide();
+                instMensajes.open();
+            });
+        });
+
+        $('#btnGrupos').click(function () {
+            debugger;
+            $('#contendorFrames').hide();
+            $("#contenedorEspera").show();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GridGrupos", "Seguridad")',
+                async: true
+            }).done(function (data) {
+
+
+                $('#contendorFrames').html(data);
+                $("#contenedorEspera").hide();
+                $('#contendorFrames').fadeIn();
+
+
+            }).fail(function (exception) {
+                $("#txtModalTitulo").css("color", "red");
+                $("#txtModalTitulo").text("Error de Sistema");
+                $("#txtModalContenido").text("Fallo al cargar la pantalla, contacte a la persona administradora de SIPAMU");
+                $("#contenedorEspera").hide();
+                instMensajes.open();
+            });
+        });
+
+        $('#btnCatalogos').click(function () {
+            debugger;
+            $('#contendorFrames').hide();
+            $("#contenedorEspera").show();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GridCatalogos", "Catalogos")',
+                async: true
+            }).done(function (data) {
+
+
+                $('#contendorFrames').html(data);
+                $("#contenedorEspera").hide();
+                $('#contendorFrames').fadeIn();
+
+
+            }).fail(function (exception) {
+                $("#txtModalTitulo").css("color", "red");
+                $("#txtModalTitulo").text("Error de Sistema");
+                $("#txtModalContenido").text("Fallo al cargar la pantalla, contacte a la persona administradora de SIPAMU");
+                $("#contenedorEspera").hide();
+                instMensajes.open();
+            });
+        });
+
+        $('#btnRptDigitacion').click(function () {
+            debugger;
+            $('#contendorFrames').hide();
+            $("#contenedorEspera").show();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Digitacion", "Reportes")',
+                async: true
+            }).done(function (data) {
+
+
+                $('#contendorFrames').html(data);
+                $("#contenedorEspera").hide();
+                $('#contendorFrames').fadeIn();
+
+
+            }).fail(function (exception) {
+                $("#txtModalTitulo").css("color", "red");
+                $("#txtModalTitulo").text("Error de Sistema");
+                $("#txtModalContenido").text("Fallo al cargar la pantalla, contacte a la persona administradora de SIPAMU");
+                $("#contenedorEspera").hide();
+                instMensajes.open();
+            });
+        });
+
+        //////////////////////////////////////////////////////////////////
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ObtenerIndicadoresGenerales", "Home")',
+            async: true,
+            success: function (data) {
+                debugger;
+                $('#txtTotalPersonas').text(data[0].Valor).trigger('change');
+                $('#txtTotalGrupos').text(data[1].Valor).trigger('change');
+                $('#txtTotalNacionales').text(data[2].Valor).trigger('change');
+                $('#txtTotalNoNacionales').text(data[3].Valor).trigger('change');
+
+
+            },
+            error: function (xhr, ajaxOptions, error) {
+                $("#txtModalTitulo").css("color", "red");
+                $("#txtModalTitulo").text("Error de Sistema");
+                $("#txtModalContenido").text("Fallo al consultar indicadores, contacte a la persona administradora de SIPAMU");
+                $("#contenedorEspera").hide();
+
+            }
+        });
+
+
+    });
+
+</script>
+
+
+
+<div class="remodal" style="background-color: white;" data-remodal-id="modalDialogo"
+     data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <h3 id="txtModalTitulo">Mesa de Ayuda</h3>
+    <p>
+        <span id="txtModalContenido"></span>
+    </p>
+</div>
+<nav class="navbar navbar-default navbar-static-top borde" style="margin-top: 5px; margin-left: 10px !important; margin-right: 10px !important; padding-bottom: 5px !important; background-color: white !important">
+
+    <div class="container" style="width: 100%; padding-left: 15px; padding-right: 15px;">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapse" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li><img src="http://www.inamu.go.cr/tema_principal_interno-theme/images/main-logo.png" alt="logo" style="padding-left: 6px"></li>
+                @*<li style="padding-top: 5px;">
+                        <a href="#" id="btnPrincipal">
+                            <i class="pe-7s-home"></i>
+                            <span>Inicio</span>
+                        </a>
+                    </li>*@
+                <li>
+                    <a href="#" id="btnInicio">
+                        <i class="pe-7s-home"></i>
+                        <span>Inicio</span>
+                    </a>
+
+                </li>
+
+
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-life-ring" style="margin-right: 3px"></i>Seguimiento <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" id="btnInstrumentoA">Crear Ticket</a></li>
+                        <li><a href="#" id="btnInstrumentoB">Mis Tickets</a></li>
+
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="pe-7s-portfolio" style="margin-right: 3px"></i>Perfil <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" id="btnCatalogos">Mi Perfil</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-pie-chart" style="margin-right: 3px"></i>Reportes <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header">Casos</li>
+                        <li><a href="#">Reporte de tickets</a></li>
+                        @*<li class="dropdown-header">Seguridad</li>
+                            <li class="dropdown-header">Otros</li>*@
+
+                    </ul>
+                </li>
+            </ul>
+
+
+            <ul class="nav navbar-nav navbar-right" style="padding-top: 5px;margin-left: 10px;">
+                <li>
+                    <img src="http://i3.kym-cdn.com/photos/images/facebook/000/120/409/03e.png" alt="" class="capturaCirculo" style="border-radius: 50%;width: 64px; height: 64px; border: 2px solid #e5e7e8;">
+                </li>
+                <li>
+                    <a href="#" id="btnCerrarSesion" data-toggle="tooltip" data-placement="top" title="Cerrar la sesión de @string.Concat(HttpContext.Current.User.Identity.Name)">
+                        <i class="fa fa-power-off"></i>
+                    </a>
+                </li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="container" id="contenedorEspera">
+    <div class="row" style="margin-top: 50px">
+        <div style="padding-top: 30px; text-align: center;border:none" class="panel-body">
+            <div class="col-xs-12 center" style="text-align: center; height: 15% !important">
+                <img src="~/Content/Imagenes/load.gif" />
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="container" id="contendorFrames" style="width: 100% !important;">
+    @*<div class="row" style="margin-right: 0 !important; margin-left: 0 !important; padding-left: 3px !important; padding-right: 3px !important">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li class="active">Dashboard</li>
+                </ol>
+            </div>
+
+        </div>*@
+
+    <div class="row" style="margin-right: 0 !important; margin-left: 0 !important; padding-left: 3px !important;padding-right: 3px !important">
+        <div class="col-md-6" style="text-align: center">
+            <div class="panel panel-info" style="border-color: grey">
+                <div class="panel-heading" style="background-color: grey">
+                    <div class="panel-title"> Actividad Reciente</div>
+                    <div style="float: right; font-size: 80%; position: relative; top: -10px">@*<a href="#">Forgot password?</a>*@</div>
+                </div>
+
+                <div style="padding-top: 30px; max-height: 100%" class="panel-body">
+
+                    <div class="twt-wrapper">
+
+                        <ul class="media-list" style="text-align: left">
+                            <li class="media">
+                                <a href="#" class="pull-left">
+                                    <img src="http://images.wisegeek.com/passport-photo.jpg" alt="" style="border-radius: 50%;width: 64px; height: 64px; border: 2px solid #e5e7e8;" class="capturaCirculo">
+                                </a>
+                                <div class="media-body">
+                                    <span class="text-muted pull-right">
+                                        <small class="text-muted">30 min ago</small>
+                                    </span>
+                                    <strong class="text-success"> Rexona Kumi</strong>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                        Lorem ipsum dolor sit amet, <a href="#"># consectetur adipiscing </a>.
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="media">
+                                <a href="#" class="pull-left">
+                                    <img src="http://ntpqetai.preview.infomaniak.website/wp-content/uploads/JerryJonesPassportSize.jpg" alt="" class="capturaCirculo" style="border-radius: 50%;width: 64px; height: 64px; border: 2px solid #e5e7e8;">
+                                </a>
+                                <div class="media-body">
+                                    <span class="text-muted pull-right">
+                                        <small class="text-muted">30 min ago</small>
+                                    </span>
+                                    <strong class="text-success"> John Doe</strong>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                        Lorem ipsum dolor <a href="#"># ipsum dolor </a>adipiscing elit.
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="media">
+                                <a href="#" class="pull-left">
+                                    <img src="https://attwiw.files.wordpress.com/2014/03/donald-trump-bad-hair-3.jpg" alt="" class="capturaCirculo" style="border-radius: 50%;width: 64px; height: 64px; border: 2px solid #e5e7e8;">
+                                </a>
+                                <div class="media-body">
+                                    <span class="text-muted pull-right">
+                                        <small class="text-muted">30 min ago</small>
+                                    </span>
+                                    <strong class="text-success"> Madonae Jonisyi</strong>
+                                    <p>
+                                        Lorem ipsum dolor <a href="#"># sit amet</a> sit amet, consectetur adipiscing elit.
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="media">
+                                <a href="#" class="pull-left">
+                                    <img src="https://t3.kn3.net/taringa/2/9/B/E/8/7/KenjiSama/C19.jpg" alt="" class="capturaCirculo" style="border-radius: 50%;width: 64px; height: 64px; border: 2px solid #e5e7e8;">
+                                </a>
+                                <div class="media-body">
+                                    <span class="text-muted pull-right">
+                                        <small class="text-muted">30 min ago</small>
+                                    </span>
+                                    <strong class="text-success"> Madonae Jonisyi</strong>
+                                    <p>
+                                        Lorem ipsum dolor <a href="#"># sit amet</a> sit amet, consectetur adipiscing elit.
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                        <a class="text-info">Ver más</a>
+
+
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" style="text-align: center">
+            <div class="panel panel-info" style="border-color: grey">
+                <div class="panel-heading" style="background-color: grey">
+                    <div class="panel-title"> Mis tickets</div>
+                    <div style="float: right; font-size: 80%; position: relative; top: -10px">@*<a href="#">Forgot password?</a>*@</div>
+                </div>
+                <div style="padding-top: 20px; max-height: 100%" class="panel-body" id="pnlIndicadoresRegion">
+
+                    <div class="row" style="margin-right: 0 !important; margin-left: 0 !important; padding-left: 3px !important; padding-right: 3px !important">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="info-box">
+                                    <span class="info-box-icon bg-aqua" style="background-color: #008000"><i style="width: inherit !important; color: white" class="fa fa-bug"></i></span>
+
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">En Cola de Incidentes</span>
+                                        <span class="info-box-number" id="txtTotalPersonas">0</span>
+                                    </div>
+                                    <!-- /.info-box-content -->
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="info-box">
+                                    <span class="info-box-icon bg-aqua" style="background-color: #00bfff;"><i style="width: inherit !important; color: white" class="fa fa-stethoscope"></i></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">En Proceso</span>
+                                        <span class="info-box-number" id="txtTotalGrupos">0</span>
+                                    </div>
+                                    <!-- /.info-box-content -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="info-box">
+                                    <span class="info-box-icon bg-aqua" style="background-color: indigo;"><i style="width: inherit !important; color: white" class="fa fa-wrench"></i></span>
+
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Cerrados</span>
+                                        <span class="info-box-number" id="txtTotalNacionales">0</span>
+                                    </div>
+                                    <!-- /.info-box-content -->
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="info-box">
+                                    <span class="info-box-icon bg-aqua" style="background-color: crimson;"><i style="width: inherit !important; color: white" class="fa fa-heartbeat"></i></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Resueltos</span>
+                                        <span class="info-box-number" id="txtTotalNoNacionales">0</span>
+                                    </div>
+                                    <!-- /.info-box-content -->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div id="contenedorEsperaIndicadores" style="text-align: center !important;">
+                    <img src="~/Content/Imagenes/load.gif" />
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div> <!-- /container -->
+

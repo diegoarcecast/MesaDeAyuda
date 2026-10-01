@@ -1,0 +1,59 @@
+﻿
+
+@{
+    ViewBag.Title = "Error de Permisos";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+<script type="text/javascript">
+    function regresarInicio() {
+        window.location.assign("@Url.Action("Index", "Home")");
+    }
+
+</script>
+<style>
+    .jumbotron {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+
+    .container {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+</style>
+<div class="container-fluid" style="padding-top: 6px; padding-bottom: 6px; background-color: white; margin-bottom: 6px; margin-left: 0px; margin-right: 0px;
+    background-color: #FFFFFF;
+    border: 1px solid #E3E3E3;border-radius: 4px; -webkit-box-shadow: none;box-shadow: none;margin-bottom: 10px">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 style="text-align: center; color: khaki">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <br />
+        <div class="col-md-12">
+            <h3 style="text-align: center;">
+                Error de Permisos
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-12">
+            <h4 style="text-align: center;">
+                Usted no cuenta con autorización para ver esta página, favor contacte a la persona administradora
+            </h4>
+        </div>
+    </div>
+    <div class="row">
+        <br />
+        <div class="col-md-12" style="text-align: center">
+            <button class="form-control" style="display: inline; width: 150px; background-color: skyblue; color: white; border-radius: 4px;" onclick="regresarInicio()"><i class="fa fa-paw" aria-hidden="true"></i>Regresar a Inicio</button>
+        </div>
+    </div>
+
+
+</div>
+
