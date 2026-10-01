@@ -254,6 +254,7 @@
     <Content Include="Scripts\leaflet.js" />
     <Content Include="Scripts\loading.gif" />
     <Content Include="Scripts\loadingoverlay.min.js" />
+    <Content Include="Scripts\app-shell.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\notify.js" />
     <Content Include="Scripts\parsley.js" />
