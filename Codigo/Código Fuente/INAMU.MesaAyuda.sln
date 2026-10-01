@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "INAMU.MesaAyuda.UI", "INAMU.MesaAyuda\INAMU.MesaAyuda.UI.csproj", "{76A4771C-64C4-47AF-BABD-8CE7B9E640EF}"
 EndProject
@@ -10,21 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COMUN_MODELO", "COMUN_MODELO\COMUN_MODELO.csproj", "{F61328BC-DD55-4F0C-BC99-15B35899C934}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://192.168.1.68:8080/tfs/inamu
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = COMUN_MODELO\\COMUN_MODELO.csproj
-		SccProjectName1 = COMUN_MODELO
-		SccLocalPath1 = COMUN_MODELO
-		SccProjectUniqueName2 = INAMU.MesaAyuda.AccesoDatos\\INAMU.MesaAyuda.AccesoDatos.csproj
-		SccProjectName2 = INAMU.MesaAyuda.AccesoDatos
-		SccLocalPath2 = INAMU.MesaAyuda.AccesoDatos
-		SccProjectUniqueName3 = INAMU.MesaAyuda\\INAMU.MesaAyuda.UI.csproj
-		SccProjectName3 = INAMU.MesaAyuda
-		SccLocalPath3 = INAMU.MesaAyuda
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

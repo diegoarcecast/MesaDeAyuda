@@ -26,8 +26,6 @@
             contentType: "application/json",
             processData: true,
             success: function (resultado) {
-                debugger;
-
                 $.each(resultado, function (key, value) {
                     $('#cmbUnidad').append($("<option/>", {
                         value: value.PKUNIDAD,
@@ -98,7 +96,7 @@
             }
         });
         $("#btn-Registro").click(function () {
-            $.LoadingOverlay("show");
+            INAMU.loading.show("Procesando…", "Estamos validando la información.");
             var resultadoValidacion = $('#registroForm').parsley().validate();
             if (resultadoValidacion === true) {
                 $.ajax({
@@ -117,12 +115,11 @@
 
 
                         if (data.TipoMensaje == 2) {
-                            debugger;
                             $("#txtModalTitulo").css("color", "red");
                             $("#txtModalTitulo").text("Error");
                             $("#txtModalContenido").text(data.ContenidoMensaje);
                             instMensajes.open();
-                            $.LoadingOverlay("hide");
+                            INAMU.loading.hide();
                         } else if (data.TipoMensaje == 1) {
                             try {
 
@@ -140,7 +137,7 @@
                                         $("#txtModalContenido").text("Puede ingresar al sistema con su usuario y contraseña de red");
                                         instMensajes.open();
                                         CerrarFormularioRegistro();
-                                        $.LoadingOverlay("hide");
+                                        INAMU.loading.hide();
 
                                     },
                                     error: function (xhr, ajaxOptions, error) {
@@ -149,7 +146,7 @@
                                         $("#txtModalContenido").text("Puede ingresar al sistema con su usuario y contraseña de red");
                                         instMensajes.open();
                                         CerrarFormularioRegistro();
-                                        $.LoadingOverlay("hide");
+                                        INAMU.loading.hide();
 
 
                                     }
@@ -162,7 +159,7 @@
                                 $("#txtModalContenido").text("Puede ingresar al sistema con su usuario y contraseña de red");
                                 instMensajes.open();
                                 CerrarFormularioRegistro();
-                                $.LoadingOverlay("hide");
+                                INAMU.loading.hide();
                             }
 
 
@@ -173,19 +170,19 @@
                         $("#txtModalTitulo").text("Conexión Fallida");
                         $("#txtModalContenido").text("Error al contactar al servidor, intente de nuevo");
                         instMensajes.open();
-                        $.LoadingOverlay("hide");
+                        INAMU.loading.hide();
 
 
                     }
                 });
             }
             else {
-                $.LoadingOverlay("hide");
+                INAMU.loading.hide();
             }
         });
         $("#btn-login")
             .click(function () {
-                $.LoadingOverlay("show");
+                INAMU.loading.show("Procesando…", "Estamos validando la información.");
                 var resultadoValidacion = $('#loginform').parsley().validate();
                 if (resultadoValidacion == true) {
 
@@ -206,7 +203,7 @@
                                 $("#txtModalTitulo").text("Conexión Fallida");
                                 $("#txtModalContenido").text(data.ContenidoMensaje);
                                 instMensajes.open();
-                                $.LoadingOverlay("hide");
+                                INAMU.loading.hide();
                             } else if (data.TipoMensaje == 1) {
                                 window.location.href = '@Url.Action("Index", "Home")';
                             }
@@ -216,7 +213,7 @@
                             $("#txtModalTitulo").text("Conexión Fallida");
                             $("#txtModalContenido").text("Error al contactar al servidor, intente de nuevo");
                             instMensajes.open();
-                            $.LoadingOverlay("hide");
+                            INAMU.loading.hide();
 
                         }
                     });
@@ -226,7 +223,7 @@
                     $("#txtModalTitulo").text("Formulario Incompleto");
                     $("#txtModalContenido").text("Error, debe suministrar su usuario de red además de su contraseña.");
                     instMensajes.open();
-                    $.LoadingOverlay("hide");
+                    INAMU.loading.hide();
                 }
 
             });
@@ -277,7 +274,7 @@
                             <!-- Button -->
 
                             <div class="col-sm-12 controls" style="text-align: center">
-                                <a id="btn-login" class="flat-btn flat-btn-success" style="background-color: #ff471a">Ingresar</a>
+                                <button id="btn-login" type="button" class="flat-btn flat-btn-success" style="background-color: #e84a2a">Ingresar</button>
                                 @*<a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>*@
 
                             </div>
@@ -285,9 +282,9 @@
                         <div class="form-group" style="margin-bottom: 3px">
                             <div class="col-md-12 control">
                                 <div style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%; ">
-                                    Primera vez en el sistema?
+                                    ¿Primera vez en el sistema?
                                     <a href="#" onclick="mostrarDialogoRegistro()">
-                                        Registrarse AQUI
+                                        Registrarse aquí
                                     </a>
                                 </div>
                             </div>
@@ -295,9 +292,9 @@
                         <div class="form-group">
                             <div class="col-md-12 control">
                                 <div style="padding-top: 1px; font-size: 85%">
-                                    Colaboradora Externa?
+                                    ¿Persona colaboradora externa?
                                     <a href="mailto:soporte@inamu.go.cr?Subject=Solicitud%20de%20Acceso%20">
-                                        Solicite acceso AQUI
+                                        Solicite acceso aquí
                                     </a>
                                 </div>
                             </div>
@@ -360,14 +357,14 @@
                         </div>
                         <div class="row" style="padding-bottom: 5px">
                             <div class="col-xs-12 form-group">
-                                <label>Apellido1</label>
+                                <label>Primer apellido</label>
 
                                 <input class="form-control totalAncho" placeholder="Solano" id="txtApellido1" type="text" required />
                             </div>
                         </div>
                         <div class="row" style="padding-bottom: 5px">
                             <div class="col-xs-12 form-group">
-                                <label>Apellido2</label>
+                                <label>Segundo apellido</label>
 
                                 <input class="form-control totalAncho" placeholder="Pérez" id="txtApellido2" type="text" required />
                             </div>
@@ -389,7 +386,7 @@
                             <!-- Button -->
 
                             <div class="col-sm-12 controls" style="text-align: center">
-                                <a id="btn-Registro" class="flat-btn flat-btn-success" style="background-color: #ff471a">Registrarse</a>
+                                <button id="btn-Registro" type="button" class="flat-btn flat-btn-success" style="background-color: #e84a2a">Registrarse</button>
                                 @*<a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>*@
 
                             </div>
@@ -430,4 +427,3 @@
     </div>
 
 </div>
-

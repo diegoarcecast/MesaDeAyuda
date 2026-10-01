@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIPAMU</title>
+    <title>@(ViewBag.Title ?? "Ingreso") | Mesa de Ayuda INAMU</title>
     @Styles.Render("~/Content/css")
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/animate.min.css" rel="stylesheet" />
@@ -25,22 +25,33 @@
     @*<script src="~/Scripts/mdb.min.js"></script>*@
     <script src="~/Scripts/notify.js"></script>
     <script src="~/Scripts/loadingoverlay.min.js"></script>
+    <script src="~/Scripts/app-shell.js"></script>
     <!-- Bootstrap -->
     <!-- Bootstrap Material Design -->
     @*<link href="~/Content/bootstrap-material-design.min.css" rel="stylesheet" />
         <link href="~/Content/ripples.min.css" rel="stylesheet" />*@
 
 </head>
-<body style="background-color: white !important; margin-top: 1px !important; padding-top: 1px !important">
-    <div class="container body-content" style="padding-top: 1px">
+<body class="login-body">
+    <div id="networkStatus" class="network-status" role="status" aria-live="polite" hidden>
+        <i class="fa fa-wifi" aria-hidden="true"></i>
+        Sin conexión. Verifique su red antes de continuar.
+    </div>
+    <div id="globalLoader" class="global-loader" role="status" aria-live="polite" aria-hidden="true">
+        <div class="global-loader__card">
+            <span class="global-loader__spinner" aria-hidden="true"></span>
+            <strong id="globalLoaderTitle">Validando información…</strong>
+            <span id="globalLoaderMessage">Esto puede tomar unos segundos.</span>
+            <small id="globalLoaderHint">Por favor, no cierre esta ventana.</small>
+        </div>
+    </div>
+    <main class="container body-content login-shell">
         @RenderBody()
         @*<hr />*@
-        <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-            <div class="container" style="color:#0098c8;text-align:center">
-                <small>@DateTime.Now.Year - INAMU Costa Rica Copyright-Todos los derechos reservados</small>
-            </div>
-        </nav>
-    </div>
+    </main>
+    <footer class="login-footer">
+        <small>&copy; @DateTime.Now.Year INAMU Costa Rica &middot; Todos los derechos reservados</small>
+    </footer>
 
 </body>
 </html>
